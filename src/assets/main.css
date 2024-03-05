@@ -3,5 +3,22 @@
 @tailwind utilities;
 
 w-vw-full {
-    width: 97vw;
+   width: 97vw;
+}
+
+::-webkit-scrollbar {
+   width: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+   background: #21242b;
+}
+
+::-webkit-scrollbar-thumb {
+   background: #3e4855;
+   border-radius: 0.15rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+   background: #283341;
 }

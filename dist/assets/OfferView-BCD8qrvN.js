@@ -1,0 +1,1 @@
+import{c as e,o as t,a as s}from"./index-BGVFZWo8.js";const c={class:"flex flex-col justify-center items-center w-vw-full min-h-screen bg-ui-background"},n=s("div",null,null,-1),o=[n],a={data(){return{}},async mounted(){},methods:{}},u=Object.assign(a,{__name:"OfferView",setup(_){return(r,l)=>(t(),e("div",c,o))}});export{u as default};
