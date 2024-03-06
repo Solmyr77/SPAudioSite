@@ -11,7 +11,11 @@ export default {
          activeMenuItem: "",
       };
    },
-   async mounted() {},
+   async mounted() {
+      this.$refs.offerButton.addEventListener("click", () => {
+         this.$router.push('/arajanlat');
+      });
+   },
    methods: {
       scrollToElement(element) {
          switch (element) {
@@ -107,10 +111,10 @@ export default {
       <!--Title body-->
       <div class="flex flex-col justify-center items-center py-32 w-full h-full max-w-7xl px-8 mx-auto">
          <div class="mt-12 w-full h-full"></div>
-         <h1 class="flex justify-center items-center text-center text-7xl dm-sans-bold text-white w-full h-full">SP Audio</h1>
+         <h1 class="flex justify-center items-center text-center text-6xl md:text-7xl dm-sans-bold text-white w-full h-full">Rendezvény hangosítás</h1>
          <p class="flex justify-center items-center text-center text-lg dm-sans-regular text-gray-300 mt-6">Profi DJ, modern hang- és fénytechnika áll rendelkezésre esküvőkhöz, céges rendezvényekhez és bulikhoz is.</p>
          <div class="mt-6 flex justify-center items-center w-full h-full">
-            <button class="rounded-full flex justify-center items-center border-none dm-sans-medium bg-white px-6 py-3 hover:bg-gray-400 transition-colors">
+            <button @click="scrollToElement('pricing')" class="rounded-full flex justify-center items-center border-none dm-sans-medium bg-white px-6 py-3 hover:bg-gray-400 transition-colors">
                Árajánlat
 
                <ArrowRightIcon class="ml-2 h-6 w-6 text-xl" />
@@ -142,7 +146,7 @@ export default {
 
       <!--Promo cards-->
       <div ref="details" class="flex flex-col justify-center items-center mx-auto mt-24 max-w-7xl px-8">
-         <div class="flex flex-col w-full max-w-7xl px-8 justify-center items-center">
+         <div class="flex flex-col w-full max-w-7xl md:px-8 justify-center items-center">
             <h2 class="text-ui-primary text-base/7 dm-sans-semibold text-center">Részletek</h2>
             <h2 class="text-3xl lg:text-5xl dm-sans-bold text-white tracking-tight text-center">Miért válasszon minket?</h2>
             <p class="mt-6 text-lg/8 text-gray-300 dm-sans-regular text-center">Válasszon minket, hogy garantáltan felejthetetlenné varázsoljuk rendezvényét a legfrissebb technikai megoldásokkal és profi szolgáltatásainkkal!</p>
@@ -202,14 +206,14 @@ export default {
 
       <!--Price offer-->
       <div ref="pricing" class="flex flex-col justify-center items-center mx-auto mt-24">
-         <div class="flex flex-col w-full max-w-7xl px-8 justify-center items-center">
+         <div class="flex flex-col w-full max-w-7xl px-2 md:px-8 justify-center items-center">
             <h2 class="text-ui-primary text-base/7 dm-sans-semibold mb-2 text-center">Árkalkulátor</h2>
             <h2 class="text-5xl dm-sans-bold text-white tracking-tight text-center">Árajánlat igénylés</h2>
             <p class="mt-6 text-lg/8 text-gray-300 dm-sans-regular text-center">Állítsa össze csomagját sajátos igényei szerint, hogy a legmegfelelőbb szolgáltatást tudjuk nyújtani önnek!</p>
          </div>
 
          <div class="flex flex-col w-full max-w-7xl px-8 justify-center items-center mt-10">
-            <button @click="this.$router.push('/arajanlat')" class="rounded-full flex justify-center items-center border-none dm-sans-semibold bg-white hover:bg-gray-400 transition-colors px-6 py-3 text-4xl">
+            <button ref="offerButton" class="rounded-full flex justify-center items-center border-none dm-sans-semibold bg-white hover:bg-gray-400 transition-colors px-6 py-3 text-4xl">
                Árkalkulátor
                <ArrowRightIcon class="ml-2 size-10 text-xl" />
             </button>
@@ -218,7 +222,7 @@ export default {
       <!--Price offer-->
 
       <!--Reviews-->
-      <div ref="reviews" class="flex flex-col justify-center items-center mx-auto mt-24">
+      <div ref="reviews" class="flex flex-col justify-center items-center mx-auto mt-24 mb-12">
          <div class="flex flex-col w-full max-w-7xl px-8 justify-center items-center">
             <h2 class="text-ui-primary text-base/7 dm-sans-semibold mb-2">Vélemények</h2>
             <h2 class="text-5xl dm-sans-bold text-white tracking-tight">Rólunk mondták</h2>
@@ -263,7 +267,7 @@ export default {
                   </div>
                </div>
 
-               <div class="rounded-lg divide-y divide-ui-card ring-1 ring-ui-ring shadow bg-ui-card mt-8">
+               <div class="rounded-lg divide-y divide-ui-card ring-1 ring-ui-ring shadow bg-ui-card mt-12 lg:mt-8">
                   <div class="flex flex-col px-4 py-5 sm:p-6">
                      <div>
                         <q class="text-gray-300">abore ullamco enim excepteur. In fugiat Lorem sit velit id veniam esse eiusmod non ea voluptate cupidatat reprehenderit ullamco dolore. Mollit laborum occaecat aliquip.</q>
@@ -299,7 +303,7 @@ export default {
                   </div>
                </div>
 
-               <div class="rounded-lg divide-y divide-ui-card ring-1 ring-ui-ring shadow bg-ui-card mt-8">
+               <div class="rounded-lg divide-y divide-ui-card ring-1 ring-ui-ring shadow bg-ui-card mt-12 lg:mt-8">
                   <div class="flex flex-col px-4 py-5 sm:p-6">
                      <div>
                         <q class="text-gray-300">abore ullamco enim excepteur. In fugiat Lorem sit velit id veniam esse eiusmod non ea voluptate cupidatat reprehenderit ullamco dolore. Mollit laborum occaecat aliquip.</q>
