@@ -13,7 +13,7 @@ export default {
    },
    async mounted() {
       this.$refs.offerButton.addEventListener("click", () => {
-         this.$router.push('/arajanlat');
+         this.$router.push("/arajanlat");
       });
    },
    methods: {
@@ -21,7 +21,7 @@ export default {
          switch (element) {
             case "top":
                window.scrollTo({ top: 0, behavior: "smooth" });
-               this.activeMenuItem = "none"
+               this.activeMenuItem = "none";
                break;
             case "details":
                this.$refs.details.scrollIntoView({ behavior: "smooth" });
@@ -59,15 +59,15 @@ export default {
             <div class="flex justify-center items-center rounded-3xl h-full ring-ui-ring ring-1 px-2 py-1">
                <div class="px-4 py-1.5">
                   <!--Active test-->
-                  <p @click="scrollToElement('details')" :class="{'text-white border-b-2 border-white -mb-0.5' : activeMenuItem == 'details', 'text-gray-400' : activeMenuItem != 'details'}" class="text-sm cursor-pointer transition-opacity">Részletek</p>
+                  <p @click="scrollToElement('details')" :class="{ 'text-white border-b-2 border-white -mb-0.5': activeMenuItem == 'details', 'text-gray-400': activeMenuItem != 'details' }" class="text-sm cursor-pointer transition-opacity">Részletek</p>
                </div>
 
                <div class="px-4 py-1.5">
-                  <p @click="scrollToElement('pricing')" :class="{'text-white border-b-2 border-white -mb-0.5' : activeMenuItem == 'pricing', 'text-gray-400' : activeMenuItem != 'pricing'}" class="text-sm cursor-pointer transition-opacity">Árajánlat</p>
+                  <p @click="scrollToElement('pricing')" :class="{ 'text-white border-b-2 border-white -mb-0.5': activeMenuItem == 'pricing', 'text-gray-400': activeMenuItem != 'pricing' }" class="text-sm cursor-pointer transition-opacity">Árajánlat</p>
                </div>
 
                <div class="px-4 py-1.5">
-                  <p @click="scrollToElement('reviews')" :class="{'text-white border-b-2 border-white -mb-0.5' : activeMenuItem == 'reviews', 'text-gray-400' : activeMenuItem != 'reviews'}" class="text-sm cursor-pointer transition-opacity">Vélemények</p>
+                  <p @click="scrollToElement('reviews')" :class="{ 'text-white border-b-2 border-white -mb-0.5': activeMenuItem == 'reviews', 'text-gray-400': activeMenuItem != 'reviews' }" class="text-sm cursor-pointer transition-opacity">Vélemények</p>
                </div>
             </div>
             <!--Nav-->
@@ -100,9 +100,9 @@ export default {
 
          <!--Menu-->
          <div v-if="isMenuVisible" class="flex flex-col w-full h-64 justify-around items-start bg-ui-background border-ui-ring border-b-2">
-            <h1 @click="scrollToElement('details')" :class="{'text-ui-primary' : activeMenuItem == 'details', 'text-gray-400' : activeMenuItem != 'details'}" class="dm-sans-semibold ml-8"><CubeIcon :class="{'fill-ui-primary' : activeMenuItem == 'details', 'fill-white' : activeMenuItem != 'details'}" class="size-8 inline mr-4" /> Részletek</h1>
-            <h1 @click="scrollToElement('pricing')" :class="{'text-ui-primary' : activeMenuItem == 'pricing', 'text-gray-400' : activeMenuItem != 'pricing'}" class="dm-sans-semibold ml-8"><CreditCardIcon :class="{'fill-ui-primary' : activeMenuItem == 'pricing', 'fill-white' : activeMenuItem != 'pricing'}" class="size-8 fill-white inline mr-4" /> Árajánlat</h1>
-            <h1 @click="scrollToElement('reviews')" :class="{'text-ui-primary' : activeMenuItem == 'reviews', 'text-gray-400' : activeMenuItem != 'reviews'}" class="dm-sans-semibold ml-8"><AcademicCapIcon :class="{'fill-ui-primary' : activeMenuItem == 'reviews', 'fill-white' : activeMenuItem != 'reviews'}" class="size-8 fill-white inline mr-4" /> Vélemények</h1>
+            <h1 @click="scrollToElement('details')" :class="{ 'text-ui-primary': activeMenuItem == 'details', 'text-gray-400': activeMenuItem != 'details' }" class="dm-sans-semibold ml-8"><CubeIcon :class="{ 'fill-ui-primary': activeMenuItem == 'details', 'fill-white': activeMenuItem != 'details' }" class="size-8 inline mr-4" /> Részletek</h1>
+            <h1 @click="scrollToElement('pricing')" :class="{ 'text-ui-primary': activeMenuItem == 'pricing', 'text-gray-400': activeMenuItem != 'pricing' }" class="dm-sans-semibold ml-8"><CreditCardIcon :class="{ 'fill-ui-primary': activeMenuItem == 'pricing', 'fill-white': activeMenuItem != 'pricing' }" class="size-8 fill-white inline mr-4" /> Árajánlat</h1>
+            <h1 @click="scrollToElement('reviews')" :class="{ 'text-ui-primary': activeMenuItem == 'reviews', 'text-gray-400': activeMenuItem != 'reviews' }" class="dm-sans-semibold ml-8"><AcademicCapIcon :class="{ 'fill-ui-primary': activeMenuItem == 'reviews', 'fill-white': activeMenuItem != 'reviews' }" class="size-8 fill-white inline mr-4" /> Vélemények</h1>
          </div>
          <!--Menu-->
       </div>
@@ -135,11 +135,11 @@ export default {
       <div class="flex flex-col w-full justify-center items-center max-w-7xl px-8 mt-20 mx-auto">
          <h2 class="text-lg dm-sans-semibold text-white leading-8">Elérhetőségeink</h2>
          <div class="mx-auto mt-10 flex flex-wrap items-center justify-between w-full">
-            <FacebookIcon class="size-10 lg:size-16 fill-white cursor-pointer hover:fill-gray-400 transition-colors" />
-            <InstagramIcon class="size-10 lg:size-16 fill-white cursor-pointer hover:fill-gray-400 transition-colors" />
-            <SoundCloudIcon class="size-10 lg:size-24 fill-white cursor-pointer hover:fill-gray-400 transition-colors" />
-            <YouTubeIcon class="size-10 lg:size-16 fill-white cursor-pointer hover:fill-gray-400 transition-colors" />
-            <XIcon class="size-10 lg:size-16 fill-white cursor-pointer hover:fill-gray-400 transition-colors" />
+            <a href="https://www.facebook.com/photo/?fbid=7341017259254176&set=a.196726630349977"><FacebookIcon class="size-10 lg:size-16 fill-white cursor-pointer hover:fill-gray-400 transition-colors" /></a>
+            <a href="https://www.instagram.com/sandorpeteer"><InstagramIcon class="size-10 lg:size-16 fill-white cursor-pointer hover:fill-gray-400 transition-colors" /></a>
+            <a href="https://soundcloud.com/peter-electro"><SoundCloudIcon class="size-10 lg:size-24 fill-white cursor-pointer hover:fill-gray-400 transition-colors" /></a>
+            <a href="https://youtu.be/oExCixqfnoQ?si=ltQ5FuJ-qg2cTDgX"><YouTubeIcon class="size-10 lg:size-16 fill-white cursor-pointer hover:fill-gray-400 transition-colors" /></a>
+            <a href="https://twitter.com/SPaudio_Miskolc"><XIcon class="size-10 lg:size-16 fill-white cursor-pointer hover:fill-gray-400 transition-colors" /></a>
          </div>
       </div>
       <!--Social media-->
@@ -234,16 +234,7 @@ export default {
                <div class="rounded-lg divide-y divide-ui-card ring-1 ring-ui-ring shadow bg-ui-card">
                   <div class="flex flex-col px-4 py-5 sm:p-6">
                      <div>
-                        <q class="text-gray-300">abore ullamco enim excepteur. In fugiat Lorem sit velit id veniam esse eiusmod non ea voluptate cupidatat reprehenderit ullamco dolore. Mollit laborum occaecat aliquip.</q>
-                        <div class="flex items-center gap-3 mt-6 relative">
-                           <span class="relative inline-flex items-center justify-center flex-shrink-0 rounded-full h-10 w-10 text-base">
-                              <img class="rounded-full h-10 w-10 text-base" alt="Rose Roberson" src="https://i.pravatar.cc/120?img=1" loading="lazy" />
-                           </span>
-                           <div>
-                              <p class="font-semibold text-white text-sm">Rose Roberson</p>
-                              <p class="text-gray-400 text-sm">CEO at Company</p>
-                           </div>
-                        </div>
+                        <q class="text-gray-300">A születésnapi bulink nagyon jól sikerült, és mindenki jól szórakozott. A cégük fantasztikus munkát végzett, és igazán emlékezetessé tették az eseményt. Köszönjük!</q>
                      </div>
                   </div>
                </div>
@@ -253,16 +244,7 @@ export default {
                <div class="rounded-lg divide-y divide-ui-card ring-1 ring-ui-ring shadow bg-ui-card">
                   <div class="flex flex-col px-4 py-5 sm:p-6">
                      <div>
-                        <q class="text-gray-300">abore ullamco enim excepteur. In fugiat Lorem sit velit id veniam esse eiusmod non ea voluptate cupidatat reprehenderit ullamco dolore. Mollit laborum occaecat aliquip.</q>
-                        <div class="flex items-center gap-3 mt-6 relative">
-                           <span class="relative inline-flex items-center justify-center flex-shrink-0 rounded-full h-10 w-10 text-base">
-                              <img class="rounded-full h-10 w-10 text-base" alt="Rose Roberson" src="https://i.pravatar.cc/120?img=1" loading="lazy" />
-                           </span>
-                           <div>
-                              <p class="font-semibold text-white text-sm">Rose Roberson</p>
-                              <p class="text-gray-400 text-sm">CEO at Company</p>
-                           </div>
-                        </div>
+                        <q class="text-gray-300">A srácok egyszerűen zseniálisak voltak. Folyamatosan fenntartották a hangulatot. Nemcsak profik, hanem elképesztően barátságosak is.</q>
                      </div>
                   </div>
                </div>
@@ -270,16 +252,7 @@ export default {
                <div class="rounded-lg divide-y divide-ui-card ring-1 ring-ui-ring shadow bg-ui-card mt-12 lg:mt-8">
                   <div class="flex flex-col px-4 py-5 sm:p-6">
                      <div>
-                        <q class="text-gray-300">abore ullamco enim excepteur. In fugiat Lorem sit velit id veniam esse eiusmod non ea voluptate cupidatat reprehenderit ullamco dolore. Mollit laborum occaecat aliquip.</q>
-                        <div class="flex items-center gap-3 mt-6 relative">
-                           <span class="relative inline-flex items-center justify-center flex-shrink-0 rounded-full h-10 w-10 text-base">
-                              <img class="rounded-full h-10 w-10 text-base" alt="Rose Roberson" src="https://i.pravatar.cc/120?img=1" loading="lazy" />
-                           </span>
-                           <div>
-                              <p class="font-semibold text-white text-sm">Rose Roberson</p>
-                              <p class="text-gray-400 text-sm">CEO at Company</p>
-                           </div>
-                        </div>
+                        <q class="text-gray-300">Az esküvőnkön minden tökéletesen működött, köszönhetően a srácoknak! A hangulat végig király volt, és mindenki jól érezte magát. Csak ajánlani tudom őket mindenki számára!</q>
                      </div>
                   </div>
                </div>
@@ -289,16 +262,7 @@ export default {
                <div class="rounded-lg divide-y divide-ui-card ring-1 ring-ui-ring shadow bg-ui-card">
                   <div class="flex flex-col px-4 py-5 sm:p-6">
                      <div>
-                        <q class="text-gray-300">abore ullamco enim excepteur. In fugiat Lorem sit velit.</q>
-                        <div class="flex items-center gap-3 mt-6 relative">
-                           <span class="relative inline-flex items-center justify-center flex-shrink-0 rounded-full h-10 w-10 text-base">
-                              <img class="rounded-full h-10 w-10 text-base" alt="Rose Roberson" src="https://i.pravatar.cc/120?img=1" loading="lazy" />
-                           </span>
-                           <div>
-                              <p class="font-semibold text-white text-sm">Rose Roberson</p>
-                              <p class="text-gray-400 text-sm">CEO at Company</p>
-                           </div>
-                        </div>
+                        <q class="text-gray-300">Köszönünk mindent! Eddigi életünk legjobb napja volt! Köszönjük a szuper bulit és koncert hangulatot!</q>
                      </div>
                   </div>
                </div>
@@ -306,16 +270,7 @@ export default {
                <div class="rounded-lg divide-y divide-ui-card ring-1 ring-ui-ring shadow bg-ui-card mt-12 lg:mt-8">
                   <div class="flex flex-col px-4 py-5 sm:p-6">
                      <div>
-                        <q class="text-gray-300">abore ullamco enim excepteur. In fugiat Lorem sit velit id veniam esse eiusmod non ea voluptate cupidatat reprehenderit ullamco dolore. Mollit laborum occaecat aliquip.</q>
-                        <div class="flex items-center gap-3 mt-6 relative">
-                           <span class="relative inline-flex items-center justify-center flex-shrink-0 rounded-full h-10 w-10 text-base">
-                              <img class="rounded-full h-10 w-10 text-base" alt="Rose Roberson" src="https://i.pravatar.cc/120?img=1" loading="lazy" />
-                           </span>
-                           <div>
-                              <p class="font-semibold text-white text-sm">Rose Roberson</p>
-                              <p class="text-gray-400 text-sm">CEO at Company</p>
-                           </div>
-                        </div>
+                        <q class="text-gray-300">Nagyon jó bulit csaptak, nagyon jó volt végig a hangulat. Felejthetetlenné tették a nagy napunkat. Bármi kérésünk volt Péter azonnal elintézte. </q>
                      </div>
                   </div>
                </div>
@@ -325,16 +280,7 @@ export default {
                <div class="rounded-lg divide-y divide-ui-card ring-1 ring-ui-ring shadow bg-ui-card">
                   <div class="flex flex-col px-4 py-5 sm:p-6">
                      <div>
-                        <q class="text-gray-300">abore ullamco enim excepteur. In fugiat Lorem sit velit id veniam esse eiusmod non ea voluptate cupidatat reprehenderit ullamco dolore. Mollit laborum occaecat aliquip.</q>
-                        <div class="flex items-center gap-3 mt-6 relative">
-                           <span class="relative inline-flex items-center justify-center flex-shrink-0 rounded-full h-10 w-10 text-base">
-                              <img class="rounded-full h-10 w-10 text-base" alt="Rose Roberson" src="https://i.pravatar.cc/120?img=1" loading="lazy" />
-                           </span>
-                           <div>
-                              <p class="font-semibold text-white text-sm">Rose Roberson</p>
-                              <p class="text-gray-400 text-sm">CEO at Company</p>
-                           </div>
-                        </div>
+                        <q class="text-gray-300">Nem lehetett volna jobb buli! A zene tökéletesen szólt, és a hangulat végig tetőponton volt. Ha valaki a legjobb bulit akarja, amit valaha átélhet, velük nem fog mellényúlni!</q>
                      </div>
                   </div>
                </div>
