@@ -1,6 +1,6 @@
 <script setup>
 import { FacebookIcon, InstagramIcon, XIcon, SoundCloudIcon, YouTubeIcon } from "vue3-simple-icons";
-import { ArrowRightIcon, CogIcon, CheckIcon, UserIcon, SpeakerWaveIcon, CurrencyDollarIcon, ChartBarIcon, Bars3Icon, XMarkIcon, CubeIcon, CreditCardIcon, AcademicCapIcon, PhotoIcon } from "@heroicons/vue/24/solid";
+import { ArrowRightIcon, CogIcon, CheckIcon, UserIcon, SpeakerWaveIcon, CurrencyDollarIcon, ChartBarIcon, Bars3Icon, XMarkIcon, CubeIcon, CreditCardIcon, AcademicCapIcon, ChevronDownIcon, DocumentTextIcon } from "@heroicons/vue/24/solid";
 </script>
 
 <script>
@@ -9,14 +9,57 @@ export default {
       return {
          isMenuVisible: false,
          activeMenuItem: "",
+         contactMenu: false,
+         isScrolling: false,
       };
    },
    async mounted() {
+      window.addEventListener("scroll", this.handleScroll);
+      this.handleScroll();
+
       this.$refs.offerButton.addEventListener("click", () => {
          this.$router.push("/arajanlat");
       });
+
+      this.$refs.titleOfferButton.addEventListener("click", () => {
+         this.$router.push("/arajanlat");
+      });
+   },
+   beforeUnmount() {
+      window.removeEventListener("scroll", this.handleScroll);
    },
    methods: {
+      handleScroll() {
+         document.onscrollend = () => {
+            let viewPortHeight = window.innerHeight;
+
+            let detailsDistanceToTop = window.scrollY + this.$refs.details.getBoundingClientRect().top - this.$refs.header.clientHeight;
+            let detailsBottomDistanceToTop = window.scrollY + this.$refs.details.getBoundingClientRect().bottom;
+
+            let pricingDistanceToTop = window.scrollY + this.$refs.pricing.getBoundingClientRect().top - this.$refs.header.clientHeight;
+            let pricingBottomDistanceToTop = window.scrollY + this.$refs.pricing.getBoundingClientRect().bottom;
+
+            let reviewsDistanceToTop = window.scrollY + this.$refs.reviews.getBoundingClientRect().top - this.$refs.header.clientHeight;
+            let reviewsBottomDistanceToTop = window.scrollY + this.$refs.reviews.getBoundingClientRect().bottom;
+
+            if (scrollY + viewPortHeight / 2 >= detailsDistanceToTop && scrollY + viewPortHeight / 2 <= detailsBottomDistanceToTop) {
+               this.activeMenuItem = "details";
+            } else if (scrollY + viewPortHeight / 2 >= pricingDistanceToTop && scrollY + viewPortHeight / 2 <= pricingBottomDistanceToTop) {
+               this.activeMenuItem = "pricing";
+            } else if (scrollY + viewPortHeight / 2 >= reviewsDistanceToTop && scrollY + viewPortHeight / 2 <= reviewsBottomDistanceToTop) {
+               this.activeMenuItem = "reviews";
+            } else {
+               this.activeMenuItem = "none";
+            }
+         };
+      },
+      scrollAction(element) {
+         let viewPortHeight = window.innerHeight;
+
+         const yOffset = -this.$refs.header.clientHeight;
+         const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+         window.scrollTo({ top: y, behavior: "smooth" });
+      },
       scrollToElement(element) {
          switch (element) {
             case "top":
@@ -24,20 +67,23 @@ export default {
                this.activeMenuItem = "none";
                break;
             case "details":
-               this.$refs.details.scrollIntoView({ behavior: "smooth" });
+               this.scrollAction(this.$refs.details);
                this.activeMenuItem = "details";
                break;
 
             case "pricing":
-               this.$refs.pricing.scrollIntoView({ behavior: "smooth" });
+               this.scrollAction(this.$refs.pricing);
                this.activeMenuItem = "pricing";
                break;
 
             case "reviews":
-               this.$refs.reviews.scrollIntoView({ behavior: "smooth" });
+               this.scrollAction(this.$refs.reviews);
                this.activeMenuItem = "reviews";
                break;
          }
+      },
+      contactButtonAction() {
+         this.contactMenu = !this.contactMenu;
       },
    },
 };
@@ -47,35 +93,45 @@ export default {
    <!--Main-->
    <div class="flex flex-col justify-center items-center w-vw-full min-h-screen bg-ui-background">
       <!--Header-->
-      <div class="invisible lg:visible flex justify-center items-center w-full py-4 dm-sans-medium mx-auto fixed top-0 z-50 bg-ui-background">
-         <div class="flex justify-between items-center w-full max-w-7xl px-8 h-full">
+      <div ref="header" class="invisible lg:visible flex justify-center items-center w-full py-4 dm-sans-medium mx-auto fixed top-0 z-50 bg-ui-background">
+         <div class="flex justify-between items-center w-full max-w-7xl h-full relative">
             <!--Inline title-->
-            <div @click="scrollToElement('top')" class="flex justify-center items-center cursor-pointer">
-               <h1 class="text-white text-xl dm-sans-bold hover:text-gray-400 transition-colors">SP Audio</h1>
+            <div class="flex justify-start items-center cursor-pointer basis-1/3 select-none">
+               <h1 @click="scrollToElement('top')" class="text-white text-xl dm-sans-bold antialiased hover:text-gray-400 transition-colors">SP Audio</h1>
             </div>
             <!--Inline title-->
 
             <!--Nav-->
-            <div class="flex justify-center items-center rounded-3xl h-full ring-ui-ring ring-1 px-2 py-1">
+            <div class="flex justify-center items-center rounded-3xl h-full ring-ui-ring ring-1 px-2 py-1 select-none">
                <div class="px-4 py-1.5">
                   <!--Active test-->
-                  <p @click="scrollToElement('details')" :class="{ 'text-white border-b-2 border-white -mb-0.5': activeMenuItem == 'details', 'text-gray-400': activeMenuItem != 'details' }" class="text-sm cursor-pointer transition-opacity">Részletek</p>
+                  <p @click="scrollToElement('details')" :class="{ 'text-white': activeMenuItem == 'details', 'text-gray-400': activeMenuItem != 'details' }" class="text-sm cursor-pointer transition-colors duration-75">Részletek</p>
                </div>
 
                <div class="px-4 py-1.5">
-                  <p @click="scrollToElement('pricing')" :class="{ 'text-white border-b-2 border-white -mb-0.5': activeMenuItem == 'pricing', 'text-gray-400': activeMenuItem != 'pricing' }" class="text-sm cursor-pointer transition-opacity">Árajánlat</p>
+                  <p @click="scrollToElement('pricing')" :class="{ 'text-white': activeMenuItem == 'pricing', 'text-gray-400': activeMenuItem != 'pricing' }" class="text-sm cursor-pointer transition-opacity">Árajánlat</p>
                </div>
 
                <div class="px-4 py-1.5">
-                  <p @click="scrollToElement('reviews')" :class="{ 'text-white border-b-2 border-white -mb-0.5': activeMenuItem == 'reviews', 'text-gray-400': activeMenuItem != 'reviews' }" class="text-sm cursor-pointer transition-opacity">Vélemények</p>
+                  <p @click="scrollToElement('reviews')" :class="{ 'text-white': activeMenuItem == 'reviews', 'text-gray-400': activeMenuItem != 'reviews' }" class="text-sm cursor-pointer transition-opacity">Vélemények</p>
                </div>
             </div>
             <!--Nav-->
 
             <!--Inline title-->
-            <div class="flex justify-center items-center">
-               <h1 class="text-gray-950 text-xl dm-sans-bold">SP Audio</h1>
+            <div class="flex flex-col justify-end items-center gap-1 basis-1/3">
+               <div class="flex justify-end items-center w-full select-none">
+                  <h1 @click="contactButtonAction()" class="text-white text-xl dm-sans-semibold antialiased z-50 cursor-pointer">Kapcsolat</h1>
+                  <ChevronDownIcon @click="contactButtonAction()" class="size-6 fill-white z-50 cursor-pointer" />
+               </div>
+
+               <div v-if="contactMenu" class="flex justify-end items-center w-full absolute top-0 -right-5 rounded-xl">
+                  <div class="text-gray-300 text-base ring-1 ring-ui-ring p-4 pt-12 bg-ui-background rounded-lg">
+                     <a href="https://spdisco.hu/gdpr.html" class="cursor-pointer">Kapcsolat - GDPR</a>
+                  </div>
+               </div>
             </div>
+
             <!--Inline title-->
          </div>
       </div>
@@ -85,24 +141,25 @@ export default {
       <div class="visible lg:invisible flex-col justify-center items-center w-full dm-sans-medium mx-auto fixed top-0 z-50 bg-ui-background">
          <div class="flex justify-between items-center w-full max-w-7xl px-8 h-full border-ui-ring border-b-2 py-4">
             <!--Inline title-->
-            <div @click="scrollToElement('top')" class="flex justify-center items-center">
-               <h1 class="text-white text-xl dm-sans-bold">SP Audio</h1>
+            <div @click="scrollToElement('top')" class="flex justify-center items-center select-none">
+               <h1 class="text-white text-xl dm-sans-bold antialiased">SP Audio</h1>
             </div>
             <!--Inline title-->
 
             <!--Menu button-->
-            <div class="flex justify-center items-center">
-               <h1 v-if="!isMenuVisible" class="text-white text-xl dm-sans-bold"><Bars3Icon @click="isMenuVisible = true" class="size-8" /></h1>
-               <h1 v-if="isMenuVisible" class="text-white text-xl dm-sans-bold"><XMarkIcon @click="isMenuVisible = false" class="size-8" /></h1>
+            <div class="flex justify-center items-center select-none">
+               <h1 v-if="!isMenuVisible" class="text-white text-xl dm-sans-bold antialiased"><Bars3Icon @click="isMenuVisible = true" class="size-8" /></h1>
+               <h1 v-if="isMenuVisible" class="text-white text-xl dm-sans-bold antialiased"><XMarkIcon @click="isMenuVisible = false" class="size-8" /></h1>
             </div>
             <!--Menu button-->
          </div>
 
          <!--Menu-->
-         <div v-if="isMenuVisible" class="flex flex-col w-full h-64 justify-around items-start bg-ui-background border-ui-ring border-b-2">
-            <h1 @click="scrollToElement('details')" :class="{ 'text-ui-primary': activeMenuItem == 'details', 'text-gray-400': activeMenuItem != 'details' }" class="dm-sans-semibold ml-8"><CubeIcon :class="{ 'fill-ui-primary': activeMenuItem == 'details', 'fill-white': activeMenuItem != 'details' }" class="size-8 inline mr-4" /> Részletek</h1>
-            <h1 @click="scrollToElement('pricing')" :class="{ 'text-ui-primary': activeMenuItem == 'pricing', 'text-gray-400': activeMenuItem != 'pricing' }" class="dm-sans-semibold ml-8"><CreditCardIcon :class="{ 'fill-ui-primary': activeMenuItem == 'pricing', 'fill-white': activeMenuItem != 'pricing' }" class="size-8 fill-white inline mr-4" /> Árajánlat</h1>
-            <h1 @click="scrollToElement('reviews')" :class="{ 'text-ui-primary': activeMenuItem == 'reviews', 'text-gray-400': activeMenuItem != 'reviews' }" class="dm-sans-semibold ml-8"><AcademicCapIcon :class="{ 'fill-ui-primary': activeMenuItem == 'reviews', 'fill-white': activeMenuItem != 'reviews' }" class="size-8 fill-white inline mr-4" /> Vélemények</h1>
+         <div v-if="isMenuVisible" class="flex flex-col w-full h-64 justify-around items-start bg-ui-background border-ui-ring border-b-2 select-none">
+            <h1 @click="scrollToElement('details')" :class="{ 'text-ui-primary': activeMenuItem == 'details', 'text-gray-400': activeMenuItem != 'details' }" class="dm-sans-semibold antialiased ml-8"><CubeIcon :class="{ 'fill-ui-primary': activeMenuItem == 'details', 'fill-white': activeMenuItem != 'details' }" class="size-8 inline mr-4" /> Részletek</h1>
+            <h1 @click="scrollToElement('pricing')" :class="{ 'text-ui-primary': activeMenuItem == 'pricing', 'text-gray-400': activeMenuItem != 'pricing' }" class="dm-sans-semibold antialiased ml-8"><CreditCardIcon :class="{ 'fill-ui-primary': activeMenuItem == 'pricing', 'fill-white': activeMenuItem != 'pricing' }" class="size-8 fill-white inline mr-4" /> Árajánlat</h1>
+            <h1 @click="scrollToElement('reviews')" :class="{ 'text-ui-primary': activeMenuItem == 'reviews', 'text-gray-400': activeMenuItem != 'reviews' }" class="dm-sans-semibold antialiased ml-8"><AcademicCapIcon :class="{ 'fill-ui-primary': activeMenuItem == 'reviews', 'fill-white': activeMenuItem != 'reviews' }" class="size-8 fill-white inline mr-4" /> Vélemények</h1>
+            <a href="https://spdisco.hu/gdpr.html" class="dm-sans-semibold antialiased ml-8 text-gray-400"><DocumentTextIcon class="size-8 fill-white inline mr-4" /> Kapcsolat - GDPR</a>
          </div>
          <!--Menu-->
       </div>
@@ -111,10 +168,10 @@ export default {
       <!--Title body-->
       <div class="flex flex-col justify-center items-center py-32 w-full h-full max-w-7xl px-8 mx-auto">
          <div class="mt-12 w-full h-full"></div>
-         <h1 class="flex justify-center items-center text-center text-6xl md:text-7xl dm-sans-bold text-white w-full h-full">Rendezvény hangosítás</h1>
+         <h1 class="flex justify-center items-center text-center text-6xl md:text-7xl dm-sans-bold antialiased text-white w-full h-full">Rendezvény hangosítás</h1>
          <p class="flex justify-center items-center text-center text-lg dm-sans-regular text-gray-300 mt-6">Profi DJ, modern hang- és fénytechnika áll rendelkezésre esküvőkhöz, céges rendezvényekhez és bulikhoz is.</p>
          <div class="mt-6 flex justify-center items-center w-full h-full">
-            <button @click="scrollToElement('pricing')" class="rounded-full flex justify-center items-center border-none dm-sans-medium bg-white px-6 py-3 hover:bg-gray-400 transition-colors">
+            <button ref="titleOfferButton" class="rounded-full flex justify-center items-center border-none dm-sans-medium bg-white px-6 py-3 hover:bg-gray-400 transition-colors">
                Árajánlat
 
                <ArrowRightIcon class="ml-2 h-6 w-6 text-xl" />
@@ -133,7 +190,7 @@ export default {
 
       <!--Social media-->
       <div class="flex flex-col w-full justify-center items-center max-w-7xl px-8 mt-20 mx-auto">
-         <h2 class="text-lg dm-sans-semibold text-white leading-8">Elérhetőségeink</h2>
+         <h2 class="text-lg dm-sans-semibold antialiased text-white leading-8">Elérhetőségeink</h2>
          <div class="mx-auto mt-10 flex flex-wrap items-center justify-between w-full">
             <a href="https://www.facebook.com/photo/?fbid=7341017259254176&set=a.196726630349977"><FacebookIcon class="size-10 lg:size-16 fill-white cursor-pointer hover:fill-gray-400 transition-colors" /></a>
             <a href="https://www.instagram.com/sandorpeteer"><InstagramIcon class="size-10 lg:size-16 fill-white cursor-pointer hover:fill-gray-400 transition-colors" /></a>
@@ -147,8 +204,8 @@ export default {
       <!--Promo cards-->
       <div ref="details" class="flex flex-col justify-center items-center mx-auto mt-24 max-w-7xl px-8">
          <div class="flex flex-col w-full max-w-7xl md:px-8 justify-center items-center">
-            <h2 class="text-ui-primary text-base/7 dm-sans-semibold text-center">Részletek</h2>
-            <h2 class="text-3xl lg:text-5xl dm-sans-bold text-white tracking-tight text-center">Miért válasszon minket?</h2>
+            <h2 class="text-ui-primary text-base/7 dm-sans-semibold antialiased text-center">Részletek</h2>
+            <h2 class="text-3xl lg:text-5xl dm-sans-bold antialiased text-white tracking-tight text-center">Miért válasszon minket?</h2>
             <p class="mt-6 text-lg/8 text-gray-300 dm-sans-regular text-center">Válasszon minket, hogy garantáltan felejthetetlenné varázsoljuk rendezvényét a legfrissebb technikai megoldásokkal és profi szolgáltatásainkkal!</p>
          </div>
 
@@ -156,7 +213,7 @@ export default {
             <div class="flex justify-center items-start rounded-xl ring-1 ring-ui-ring bg-ui-card">
                <div class="flex flex-col justify-center items-start px-4 py-5">
                   <div class="mb-3 mt-1 pointer-events-none"><CogIcon class="size-8 fill-white stroke-0 bg-ui-card" /></div>
-                  <div class="text-white dm-sans-bold">Tapasztalat és szakértelem</div>
+                  <div class="text-white dm-sans-bold antialiased">Tapasztalat és szakértelem</div>
                   <div class="text-gray-400 mt-1 dm-sans-regular">Csapatunk olyan tapasztalt szakemberekből áll, akik évek óta tevékenykednek a hang- és fénytechnika területén.</div>
                </div>
             </div>
@@ -164,7 +221,7 @@ export default {
             <div class="flex justify-center items-start rounded-xl ring-1 ring-ui-ring bg-ui-card">
                <div class="flex flex-col justify-center items-start px-4 py-5">
                   <div class="mb-3 mt-1 pointer-events-none"><CheckIcon class="size-8 fill-white stroke-0 bg-ui-card" /></div>
-                  <div class="text-white dm-sans-bold">Egyedi megoldások</div>
+                  <div class="text-white dm-sans-bold antialiased">Egyedi megoldások</div>
                   <div class="text-gray-400 mt-1 dm-sans-regular">Nem állunk meg a bevett megoldásoknál. Minden ügyfelünk számára egyedi megoldásokat kínálunk, figyelembe véve az egyedi igényeket és a rendezvény jellegét.</div>
                </div>
             </div>
@@ -172,7 +229,7 @@ export default {
             <div class="flex justify-center items-start rounded-xl ring-1 ring-ui-ring bg-ui-card">
                <div class="flex flex-col justify-center items-start px-4 py-5">
                   <div class="mb-3 mt-1 pointer-events-none"><UserIcon class="size-8 fill-white stroke-0 bg-ui-card" /></div>
-                  <div class="text-white dm-sans-bold">Ügyfélorientáltság</div>
+                  <div class="text-white dm-sans-bold antialiased">Ügyfélorientáltság</div>
                   <div class="text-gray-400 mt-1 dm-sans-regular">Rugalmasak vagyunk, és mindent megteszünk annak érdekében, hogy az elképzeléseiknek megfelelően valósítsuk meg igényeiket.</div>
                </div>
             </div>
@@ -180,7 +237,7 @@ export default {
             <div class="flex justify-center items-start rounded-xl ring-1 ring-ui-ring bg-ui-card">
                <div class="flex flex-col justify-center items-start px-4 py-5">
                   <div class="mb-3 mt-1 pointer-events-none"><SpeakerWaveIcon class="size-8 fill-white stroke-0 bg-ui-card" /></div>
-                  <div class="text-white dm-sans-bold">Hangminőség</div>
+                  <div class="text-white dm-sans-bold antialiased">Hangminőség</div>
                   <div class="text-gray-400 mt-1 dm-sans-regular">Hangosításunk kristálytiszta hangzással tölti meg a teret, hogy minden szó tökéletesen érthető legyen, és minden dallam életre keljen.</div>
                </div>
             </div>
@@ -188,7 +245,7 @@ export default {
             <div class="flex justify-center items-start rounded-xl ring-1 ring-ui-ring bg-ui-card">
                <div class="flex flex-col justify-center items-start px-4 py-5">
                   <div class="mb-3 mt-1 pointer-events-none"><CurrencyDollarIcon class="size-8 fill-white stroke-0 bg-ui-card" /></div>
-                  <div class="text-white dm-sans-bold">Megfizethetőség</div>
+                  <div class="text-white dm-sans-bold antialiased">Megfizethetőség</div>
                   <div class="text-gray-400 mt-1 dm-sans-regular">Tudjuk, hogy fontos szempont az ár, ezért törekszünk arra, hogy versenyképes áron kínáljuk szolgáltatásainkat anélkül, hogy a minőséget veszélyeztetnénk.</div>
                </div>
             </div>
@@ -196,7 +253,7 @@ export default {
             <div class="flex justify-center items-start rounded-xl ring-1 ring-ui-ring bg-ui-card">
                <div class="flex flex-col justify-center items-start px-4 py-5">
                   <div class="mb-3 mt-1 pointer-events-none"><ChartBarIcon class="size-8 fill-white stroke-0 bg-ui-card" /></div>
-                  <div class="text-white dm-sans-bold">Technológiai fejlesztések</div>
+                  <div class="text-white dm-sans-bold antialiased">Technológiai fejlesztések</div>
                   <div class="text-gray-400 mt-1 dm-sans-regular">Cégünk folyamatosan nyomon követi a legújabb technológiai fejlesztéseket a hang- és fénytechnika területén.</div>
                </div>
             </div>
@@ -205,15 +262,15 @@ export default {
       <!--Promo cards-->
 
       <!--Price offer-->
-      <div ref="pricing" class="flex flex-col justify-center items-center mx-auto mt-24">
+      <div ref="pricing" class="flex flex-col justify-center items-center mx-auto mt-24 py-24">
          <div class="flex flex-col w-full max-w-7xl px-2 md:px-8 justify-center items-center">
-            <h2 class="text-ui-primary text-base/7 dm-sans-semibold mb-2 text-center">Árkalkulátor</h2>
-            <h2 class="text-5xl dm-sans-bold text-white tracking-tight text-center">Árajánlat igénylés</h2>
+            <h2 class="text-ui-primary text-base/7 dm-sans-semibold antialiased mb-3 text-center">Árkalkulátor</h2>
+            <h2 class="text-5xl dm-sans-bold antialiased text-white tracking-tight text-center">Árajánlat igénylés</h2>
             <p class="mt-6 text-lg/8 text-gray-300 dm-sans-regular text-center">Állítsa össze csomagját sajátos igényei szerint, hogy a legmegfelelőbb szolgáltatást tudjuk nyújtani önnek!</p>
          </div>
 
-         <div class="flex flex-col w-full max-w-7xl px-8 justify-center items-center mt-10">
-            <button ref="offerButton" class="rounded-full flex justify-center items-center border-none dm-sans-semibold bg-white hover:bg-gray-400 transition-colors px-6 py-3 text-4xl">
+         <div class="flex flex-col w-full max-w-7xl px-8 justify-center items-center mt-16">
+            <button ref="offerButton" class="rounded-full flex justify-center items-center border-none dm-sans-semibold antialiased bg-white hover:bg-gray-400 transition-colors px-6 py-3 text-4xl">
                Árkalkulátor
                <ArrowRightIcon class="ml-2 size-10 text-xl" />
             </button>
@@ -224,8 +281,8 @@ export default {
       <!--Reviews-->
       <div ref="reviews" class="flex flex-col justify-center items-center mx-auto mt-24 mb-12">
          <div class="flex flex-col w-full max-w-7xl px-8 justify-center items-center">
-            <h2 class="text-ui-primary text-base/7 dm-sans-semibold mb-2">Vélemények</h2>
-            <h2 class="text-5xl dm-sans-bold text-white tracking-tight">Rólunk mondták</h2>
+            <h2 class="text-ui-primary text-base/7 dm-sans-semibold antialiased mb-2">Vélemények</h2>
+            <h2 class="text-5xl dm-sans-bold antialiased text-white tracking-tight">Rólunk mondták</h2>
             <p class="mt-6 text-lg/8 text-gray-300 dm-sans-regular text-center">Az elégedett ügyfelek szavai az egyik legjobb visszajelzés számunkra. Itt olvashatja, mit mondtak rólunk azok, akik már dolgoztak velünk.</p>
          </div>
 
@@ -290,7 +347,13 @@ export default {
       <!--Reviews-->
 
       <!--Footer-->
-      <div></div>
+      <div class="flex-col justify-center items-center w-full border-ui-ring border-t">
+         <div class="flex flex-col justify-center items-center w-full py-4">
+            <h3 class="text-lg text-white ml-4 dm-sans-semibold mb-4">Dokumentumok</h3>
+            <a class="text-gray-300 text-base ml-4 hover:text-gray-500 transition-colors dm-sans-regular" href="https://spdisco.hu/gdpr.html">Kapcsolat - GDPR</a>
+         </div>
+      </div>
+
       <!--Footer-->
    </div>
    <!--Main-->
