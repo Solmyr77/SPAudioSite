@@ -11,6 +11,7 @@ export default {
          activeMenuItem: "",
          contactMenu: false,
          isScrolling: false,
+         cookieMenu: false,
       };
    },
    async mounted() {
@@ -54,10 +55,8 @@ export default {
          };
       },
       scrollAction(element) {
-         let viewPortHeight = window.innerHeight;
-
          const yOffset = -this.$refs.header.clientHeight;
-         const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+         const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
          window.scrollTo({ top: y, behavior: "smooth" });
       },
       scrollToElement(element) {
@@ -85,13 +84,26 @@ export default {
       contactButtonAction() {
          this.contactMenu = !this.contactMenu;
       },
+      handleCookieMenu() {
+         this.cookieMenu = true;
+      }
    },
 };
 </script>
 
 <template>
    <!--Main-->
-   <div class="flex flex-col justify-center items-center w-vw-full min-h-screen bg-ui-background">
+   <div class="flex flex-col justify-center items-center w-vw-full min-h-screen bg-ui-background relative">
+
+      <div v-if="!cookieMenu" class="fixed bottom-12 left-1/2 z-50 -translate-x-1/2 rounded-full bg-ui-background p-2 max-sm:w-11/12 ring-1 ring-ui-ring" id="gdpr">
+         <div class="flex items-center justify-between gap-6 text-sm">
+            <div class="content-left pl-4 dark:text-white">Ez az oldal nem használ cookie-kat.</div>
+            <div class="content-right text-end">
+               <button @click="handleCookieMenu()" class="cursor-pointer rounded-full dark:bg-white px-4 py-2 text-ui-background dm-sans-bold">OK</button>
+            </div>
+         </div>
+      </div>
+
       <!--Header-->
       <div ref="header" class="invisible lg:visible flex justify-center items-center w-full py-4 dm-sans-medium mx-auto fixed top-0 z-50 bg-ui-background">
          <div class="flex justify-between items-center w-full max-w-7xl h-full relative">
