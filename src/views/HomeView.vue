@@ -294,7 +294,7 @@ export default {
       <div ref="reviews" class="flex flex-col justify-center items-center mx-auto mt-24 mb-12">
          <div class="flex flex-col w-full max-w-7xl px-8 justify-center items-center">
             <h2 class="text-ui-primary text-base/7 dm-sans-semibold antialiased mb-2">Vélemények</h2>
-            <h2 class="text-5xl dm-sans-bold antialiased text-white tracking-tight">Rólunk mondták</h2>
+            <h2 class="text-5xl dm-sans-bold antialiased text-white tracking-tight text-center">Rólunk mondták</h2>
             <p class="mt-6 text-lg/8 text-gray-300 dm-sans-regular text-center">Az elégedett ügyfelek szavai az egyik legjobb visszajelzés számunkra. Itt olvashatja, mit mondtak rólunk azok, akik már dolgoztak velünk.</p>
          </div>
 
