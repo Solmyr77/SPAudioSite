@@ -179,7 +179,7 @@ export default {
       <!--Title body-->
       <div class="flex flex-col justify-center items-center py-32 w-full h-full max-w-7xl px-8 mx-auto">
          <div class="mt-12 w-full h-full"></div>
-         <h1 @click="this.$router.push('/zenekeres')" class="flex justify-center items-center text-center text-6xl md:text-7xl dm-sans-bold antialiased text-white w-full h-full">Rendezvény hangosítás</h1>
+         <h1 class="flex justify-center items-center text-center text-6xl md:text-7xl dm-sans-bold antialiased text-white w-full h-full">Rendezvény hangosítás</h1>
          <p class="flex justify-center items-center text-center text-lg dm-sans-regular text-gray-300 mt-6">Profi DJ, modern hang- és fénytechnika áll rendelkezésre esküvőkhöz, céges rendezvényekhez és nagyobb bulikhoz is.</p>
          <div class="mt-6 flex justify-center items-center w-full h-full">
             <button ref="titleOfferButton" class="rounded-full flex justify-center items-center border-none dm-sans-medium bg-white px-6 py-3 hover:bg-gray-400 transition-colors">
