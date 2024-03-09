@@ -86,7 +86,7 @@ export default {
       },
       handleCookieMenu() {
          this.cookieMenu = true;
-      }
+      },
    },
 };
 </script>
@@ -94,10 +94,9 @@ export default {
 <template>
    <!--Main-->
    <div class="flex flex-col justify-center items-center w-vw-full min-h-screen bg-ui-background relative">
-
       <div v-if="!cookieMenu" class="fixed bottom-12 left-1/2 z-50 -translate-x-1/2 rounded-full bg-ui-background p-2 max-sm:w-11/12 ring-1 ring-ui-ring" id="gdpr">
          <div class="flex items-center justify-between gap-6 text-sm">
-            <div class="content-left pl-4 dark:text-white">Ez az oldal nem használ cookie-kat.</div>
+            <div class="content-left pl-4 text-white">Ez az oldal nem használ cookie-kat.</div>
             <div class="content-right text-end">
                <button @click="handleCookieMenu()" class="cursor-pointer rounded-full dark:bg-white px-4 py-2 text-ui-background dm-sans-bold">OK</button>
             </div>
@@ -181,7 +180,7 @@ export default {
       <div class="flex flex-col justify-center items-center py-32 w-full h-full max-w-7xl px-8 mx-auto">
          <div class="mt-12 w-full h-full"></div>
          <h1 class="flex justify-center items-center text-center text-6xl md:text-7xl dm-sans-bold antialiased text-white w-full h-full">Rendezvény hangosítás</h1>
-         <p class="flex justify-center items-center text-center text-lg dm-sans-regular text-gray-300 mt-6">Profi DJ, modern hang- és fénytechnika áll rendelkezésre esküvőkhöz, céges rendezvényekhez és bulikhoz is.</p>
+         <p class="flex justify-center items-center text-center text-lg dm-sans-regular text-gray-300 mt-6">Profi DJ, modern hang- és fénytechnika áll rendelkezésre esküvőkhöz, céges rendezvényekhez és nagyobb bulikhoz is.</p>
          <div class="mt-6 flex justify-center items-center w-full h-full">
             <button ref="titleOfferButton" class="rounded-full flex justify-center items-center border-none dm-sans-medium bg-white px-6 py-3 hover:bg-gray-400 transition-colors">
                Árajánlat
@@ -358,14 +357,25 @@ export default {
       </div>
       <!--Reviews-->
 
+      <!--Map-->
+      <div class="flex flex-col justify-between items-center max-w-7xl w-full lg:py-24">
+         <div class="flex justify-center items-center mb-6 flex-col">
+            <h2 class="text-ui-primary text-base/7 dm-sans-semibold antialiased mb-2">Térkép</h2>
+            <h2 class="text-5xl dm-sans-bold antialiased text-white tracking-tight text-center">Telephelyünk</h2>
+         </div>
+         <div class="flex justify-center items-center w-full max-w-7xl px-4">
+            <iframe class="rounded-xl ring-1 ring-ui-ring lg:w-full" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d666.5390231691204!2d20.78542805872192!3d48.06862989999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4740a1ffbd0dbd33%3A0xb1325a16661ea3b9!2shangtechnika%20-%20f%C3%A9nytechnika%20-%20DJ%20-%20esk%C3%BCv%C5%91%20-%20rendezv%C3%A9ny%20-%20Miskolc%20vonz%C3%A1sk%C3%B6rzet%C3%A9ben!5e0!3m2!1sen!2sca!4v1710000759765!5m2!1sen!2sca" width="600" height="450" style="border: 0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+         </div>
+      </div>
+      <!--Map-->
+
       <!--Footer-->
-      <div class="flex-col justify-center items-center w-full border-ui-ring border-t">
-         <div class="flex flex-col justify-center items-center w-full py-4">
+      <div class="flex justify-center items-center w-full border-ui-ring border-t">
+         <div class="flex flex-col justify-center items-center w-full py-4 basis-1/3">
             <h3 class="text-lg text-white ml-4 dm-sans-semibold mb-4">Dokumentumok</h3>
             <a class="text-gray-300 text-base ml-4 hover:text-gray-500 transition-colors dm-sans-regular" href="https://spdisco.hu/gdpr.html">Kapcsolat - GDPR</a>
          </div>
       </div>
-
       <!--Footer-->
    </div>
    <!--Main-->
