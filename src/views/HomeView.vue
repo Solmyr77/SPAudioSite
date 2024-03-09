@@ -203,7 +203,7 @@ export default {
       <div class="flex flex-col w-full justify-center items-center max-w-7xl px-8 mt-20 mx-auto">
          <h2 class="text-lg dm-sans-semibold antialiased text-white leading-8">Elérhetőségeink</h2>
          <div class="mx-auto mt-10 flex flex-wrap items-center justify-between w-full">
-            <a href="https://www.facebook.com/photo/?fbid=7341017259254176&set=a.196726630349977"><FacebookIcon class="size-10 lg:size-16 fill-white cursor-pointer hover:fill-gray-400 transition-colors" /></a>
+            <a href="https://www.facebook.com/profile.php?id=61557404903107"><FacebookIcon class="size-10 lg:size-16 fill-white cursor-pointer hover:fill-gray-400 transition-colors" /></a>
             <a href="https://www.instagram.com/sandorpeteer"><InstagramIcon class="size-10 lg:size-16 fill-white cursor-pointer hover:fill-gray-400 transition-colors" /></a>
             <a href="https://soundcloud.com/peter-electro"><SoundCloudIcon class="size-10 lg:size-24 fill-white cursor-pointer hover:fill-gray-400 transition-colors" /></a>
             <a href="https://youtu.be/oExCixqfnoQ?si=ltQ5FuJ-qg2cTDgX"><YouTubeIcon class="size-10 lg:size-16 fill-white cursor-pointer hover:fill-gray-400 transition-colors" /></a>
