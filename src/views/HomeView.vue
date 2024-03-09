@@ -98,7 +98,7 @@ export default {
          <div class="flex items-center justify-between gap-6 text-sm">
             <div class="content-left pl-4 text-white">Ez az oldal nem használ cookie-kat.</div>
             <div class="content-right text-end">
-               <button @click="handleCookieMenu()" class="cursor-pointer rounded-full dark:bg-white px-4 py-2 text-ui-background dm-sans-bold">OK</button>
+               <button @click="handleCookieMenu()" class="cursor-pointer rounded-full bg-white px-4 py-2 text-ui-background dm-sans-bold">OK</button>
             </div>
          </div>
       </div>
