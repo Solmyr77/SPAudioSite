@@ -14,6 +14,7 @@ class Mail {
     public $datum;
     public $helyszin;
     public $letszam;
+    public $extraReqs;
     public $finalMessage;
     public $dj;
     public $fenyek;
@@ -29,12 +30,13 @@ class Mail {
         $this->datum = $splitMessage[3];
         $this->helyszin = $splitMessage[4];
         $this->letszam = $splitMessage[5];
-        $this->dj = $splitMessage[6];
-        $this->fenyek = $splitMessage[7];
-        $this->foto = $splitMessage[8];
-        $this->video = $splitMessage[9];
+        $this->extraReqs = $splitMessage[6];
+        $this->dj = $splitMessage[7];
+        $this->fenyek = $splitMessage[8];
+        $this->foto = $splitMessage[9];
+        $this->video = $splitMessage[10];
 
-        $this->finalMessage = "Név: $this->nev\nEmail: $this->email\nTelefon: $this->telefon\nDátum: $this->datum\nHelyszín: $this->helyszin\nLétszám: $this->letszam\nDJ: $this->dj\nFények: $this->fenyek\nFotós: $this->foto\nVideós: $this->video";
+        $this->finalMessage = "Név: $this->nev\nEmail: $this->email\nTelefon: $this->telefon\nDátum: $this->datum\nHelyszín: $this->helyszin\nLétszám: $this->letszam\nEgyéb kérések: $this->extraReqs\nDJ: $this->dj\nFények: $this->fenyek\nFotós: $this->foto\nVideós: $this->video";
     }
 
     function sendEmail() {

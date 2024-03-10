@@ -179,8 +179,8 @@ export default {
       <!--Title body-->
       <div class="flex flex-col justify-center items-center py-32 w-full h-full max-w-7xl px-8 mx-auto">
          <div class="mt-12 w-full h-full"></div>
-         <h1 class="flex justify-center items-center text-center text-6xl md:text-7xl dm-sans-bold antialiased text-white w-full h-full">Rendezvény hangosítás</h1>
-         <p class="flex justify-center items-center text-center text-lg dm-sans-regular text-gray-300 mt-6">Profi DJ, modern hang- és fénytechnika áll rendelkezésre esküvőkhöz, céges rendezvényekhez és nagyobb bulikhoz is.</p>
+         <h1 class="flex justify-center items-center text-center text-3xl md:text-7xl dm-sans-bold antialiased text-white w-full h-full">Rendezvénytechnika</h1>
+         <p class="flex justify-center items-center text-center text-lg dm-sans-regular text-gray-300 mt-6">Profi DJ, modern hang- , fotó- , videó- , és fénytechnika áll rendelkezésre esküvőkhöz, céges rendezvényekhez és nagyobb bulikhoz is.</p>
          <div class="mt-6 flex justify-center items-center w-full h-full">
             <button ref="titleOfferButton" class="rounded-full flex justify-center items-center border-none dm-sans-medium bg-white px-6 py-3 hover:bg-gray-400 transition-colors">
                Árajánlat
@@ -194,7 +194,7 @@ export default {
       <!--Promo image-->
       <div class="flex justify-center items-center p-4 rounded-xl max-w-7xl px-4 w-full h-full ring-1 ring-ui-ring mx-auto">
          <div class="aspect-3/2 flex justify-center items-center h-full w-full">
-            <img class="rounded-xl" src="../images/img_promo.jpg" alt="Promo image" title="Promo image" />
+            <img class="rounded-xl" src="../images/img_promo.webp" alt="Promo image" title="Promo image" />
          </div>
       </div>
       <!--Promo image-->
@@ -288,6 +288,144 @@ export default {
          </div>
       </div>
       <!--Price offer-->
+
+      <!--Technology-->
+      <div ref="technology" class="flex flex-col justify-center items-center mx-auto mt-24 max-w-7xl px-8">
+         <div class="flex flex-col w-full max-w-7xl md:px-8 justify-center items-center">
+            <h2 class="text-ui-primary text-base/7 dm-sans-semibold antialiased text-center">Technika</h2>
+            <h2 class="text-3xl lg:text-5xl dm-sans-bold antialiased text-white tracking-tight text-center">Rendelkezésre álló technika</h2>
+            <p class="mt-6 text-lg/8 text-gray-300 dm-sans-regular text-center">Válasszon minket, hogy garantáltan felejthetetlenné varázsoljuk rendezvényét a legfrissebb technikai megoldásokkal és profi szolgáltatásainkkal!</p>
+         </div>
+
+         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2 gap-8 mt-24">
+            <div class="flex justify-center items-start rounded-xl ring-1 ring-ui-ring bg-ui-card">
+               <div class="flex flex-col justify-between items-start px-4 py-5 h-full">
+                  <div class="flex justify-between items-center w-full">
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-32" src="../images/tech/hksub.jpg" /></div>
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-32" src="../images/tech/hktop.jpg" /></div>
+                  </div>
+
+                  <div>
+                     <div class="text-white dm-sans-bold antialiased">HK Audio Rendszer</div>
+                     <div class="text-gray-400 mt-1 dm-sans-regular break-words">A HK Audio rendszereket a kiváló hangminőség, a megbízhatóság és a tartósság jellemzi.</div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="flex justify-center items-start rounded-xl ring-1 ring-ui-ring bg-ui-card">
+               <div class="flex flex-col justify-between items-start px-4 py-5 h-full">
+                  <div class="flex justify-between items-center w-full">
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36" src="../images/tech/boxsub.png" /></div>
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36" src="../images/tech/proline.png" /></div>
+                  </div>
+
+                  <div>
+                     <div class="text-white dm-sans-bold antialiased">Extra Bass</div>
+                     <div class="text-gray-400 mt-1 dm-sans-regular">Ezek a szubládák erős és tiszta basszust nyújtanak, ideálisak nagyobb hangterekben való használatra, ahol mély és erőteljes hangzásra van szükség.</div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="flex justify-center items-start rounded-xl ring-1 ring-ui-ring bg-ui-card">
+               <div class="flex flex-col justify-between items-start px-4 py-5 h-full">
+                  <div class="flex justify-between items-center w-full">
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl h-28 rotate-90" src="../images/tech/pdmonitor.png" /></div>
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl h-40 rotate-90" src="../images/tech/fbmonitor.png" /></div>
+                  </div>
+
+                  <div>
+                     <div class="text-white dm-sans-bold antialiased">Monitor rendszer</div>
+                     <div class="text-gray-400 mt-1 dm-sans-regular">Csapatunk olyan tapasztalt szakemberekből áll, akik évek óta tevékenykednek a hang- és fénytechnika területén.</div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="flex justify-center items-start rounded-xl ring-1 ring-ui-ring bg-ui-card">
+               <div class="flex flex-col justify-between items-start px-4 py-5 h-full">
+                  <div class="flex justify-between items-center w-full">
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-32" src="../images/tech/rode1.png" /></div>
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-48" src="../images/tech/acson.webp" /></div>
+                  </div>
+
+                  <div>
+                     <div class="text-white dm-sans-bold antialiased">Vezeték nélküli rendszer</div>
+                     <div class="text-gray-400 mt-1 dm-sans-regular">Csapatunk olyan tapasztalt szakemberekből áll, akik évek óta tevékenykednek a hang- és fénytechnika területén.</div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="flex justify-center items-start rounded-xl ring-1 ring-ui-ring bg-ui-card">
+               <div class="flex flex-col justify-between items-start px-4 py-5 h-full">
+                  <div class="flex justify-between items-center w-full">
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36" src="../images/tech/flx6.png" /></div>
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36" src="../images/tech/mac.png" /></div>
+                  </div>
+
+                  <div>
+                     <div class="text-white dm-sans-bold antialiased">DJ Kontroller</div>
+                     <div class="text-gray-400 mt-1 dm-sans-regular">Csapatunk olyan tapasztalt szakemberekből áll, akik évek óta tevékenykednek a hang- és fénytechnika területén.</div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="flex justify-center items-start rounded-xl ring-1 ring-ui-ring bg-ui-card">
+               <div class="flex flex-col justify-between items-start px-4 py-5 h-full">
+                  <div class="flex justify-between items-center w-full">
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36" src="../images/tech/atem.png" /></div>
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-32" src="../images/tech/zoommix.png" /></div>
+                  </div>
+
+                  <div>
+                     <div class="text-white dm-sans-bold antialiased">Keverők</div>
+                     <div class="text-gray-400 mt-1 dm-sans-regular">Csapatunk olyan tapasztalt szakemberekből áll, akik évek óta tevékenykednek a hang- és fénytechnika területén.</div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="flex justify-center items-start rounded-xl ring-1 ring-ui-ring bg-ui-card">
+               <div class="flex flex-col justify-between items-start px-4 py-5 h-full">
+                  <div class="flex justify-between items-center w-full">
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36" src="../images/tech/canoncam.png" /></div>
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-32" src="../images/tech/lens.png" /></div>
+                  </div>
+
+                  <div>
+                     <div class="text-white dm-sans-bold antialiased">Fotótechnika</div>
+                     <div class="text-gray-400 mt-1 dm-sans-regular">Csapatunk olyan tapasztalt szakemberekből áll, akik évek óta tevékenykednek a hang- és fénytechnika területén.</div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="flex justify-center items-start rounded-xl ring-1 ring-ui-ring bg-ui-card">
+               <div class="flex flex-col justify-between items-start px-4 py-5 h-full">
+                  <div class="flex justify-between items-center w-full">
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36" src="../images/tech/sonycam1.png" /></div>
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-32" src="../images/tech/sonycam2.png" /></div>
+                  </div>
+
+                  <div>
+                     <div class="text-white dm-sans-bold antialiased">Videótechnika</div>
+                     <div class="text-gray-400 mt-1 dm-sans-regular">Csapatunk olyan tapasztalt szakemberekből áll, akik évek óta tevékenykednek a hang- és fénytechnika területén.</div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="flex justify-center items-start rounded-xl ring-1 ring-ui-ring bg-ui-card">
+               <div class="flex flex-col justify-between items-start px-4 py-5 h-full">
+                  <div class="flex justify-between items-center w-full">
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36" src="../images/tech/scarlett1.png" /></div>
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-40" src="../images/tech/scarlett.png" /></div>
+                  </div>
+
+                  <div>
+                     <div class="text-white dm-sans-bold antialiased">Hangmodulok</div>
+                     <div class="text-gray-400 mt-1 dm-sans-regular">Csapatunk olyan tapasztalt szakemberekből áll, akik évek óta tevékenykednek a hang- és fénytechnika területén.</div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!--Technology-->
 
       <!--Reviews-->
       <div ref="reviews" class="flex flex-col justify-center items-center mx-auto mt-24 mb-12">
