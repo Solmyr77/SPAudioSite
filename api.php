@@ -48,6 +48,7 @@ class Mail {
     }
 
     function sendEmail() {
+        mail($this->email, "SP Audio Visszaigazolás", $this->finalMessage, $this->headers);
         return mail("hang@spdisco.hu", "SP Audio !FONTOS!", $this->finalMessage, $this->headers);
     }
 }
