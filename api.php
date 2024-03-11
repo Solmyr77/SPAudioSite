@@ -16,6 +16,10 @@ class Mail {
     public $letszam;
     public $extraReqs;
     public $finalMessage;
+    public $sound;
+    public $show;
+    public $concert;
+    public $live;
     public $dj;
     public $fenyek;
     public $foto;
@@ -31,12 +35,16 @@ class Mail {
         $this->helyszin = $splitMessage[4];
         $this->letszam = $splitMessage[5];
         $this->extraReqs = $splitMessage[6];
-        $this->dj = $splitMessage[7];
-        $this->fenyek = $splitMessage[8];
-        $this->foto = $splitMessage[9];
-        $this->video = $splitMessage[10];
+        $this->sound = $splitMessage[7];
+        $this->show = $splitMessage[8];
+        $this->concert = $splitMessage[9];
+        $this->live = $splitMessage[10];
+        $this->dj = $splitMessage[11];
+        $this->fenyek = $splitMessage[12];
+        $this->foto = $splitMessage[13];
+        $this->video = $splitMessage[14];
 
-        $this->finalMessage = "Név: $this->nev\nEmail: $this->email\nTelefon: $this->telefon\nDátum: $this->datum\nHelyszín: $this->helyszin\nLétszám: $this->letszam\nEgyéb kérések: $this->extraReqs\nDJ: $this->dj\nFények: $this->fenyek\nFotós: $this->foto\nVideós: $this->video";
+        $this->finalMessage = "Név: $this->nev\nEmail: $this->email\nTelefon: $this->telefon\nDátum: $this->datum\nHelyszín: $this->helyszin\nLétszám: $this->letszam\nEgyéb kérések: $this->extraReqs\nHangosítás: $this->sound\nMűsorvezetés: $this->show\nÉlő koncert: $this->concert\nÉlő közvetítés: $this->live\nDJ: $this->dj\nFények: $this->fenyek\nFotós: $this->foto\nVideós: $this->video";
     }
 
     function sendEmail() {

@@ -1,6 +1,6 @@
 <script setup>
 // import { FacebookIcon, InstagramIcon, XIcon, SoundCloudIcon, YouTubeIcon } from "vue3-simple-icons";
-import { ArrowRightIcon, ArrowLeftIcon, MusicalNoteIcon, LightBulbIcon, CameraIcon, VideoCameraIcon, SpeakerWaveIcon, MicrophoneIcon, FilmIcon, TvIcon } from "@heroicons/vue/24/solid";
+import { ArrowRightIcon, ArrowLeftIcon, MusicalNoteIcon, LightBulbIcon, CameraIcon, VideoCameraIcon, SpeakerWaveIcon, MicrophoneIcon, FilmIcon, UsersIcon } from "@heroicons/vue/24/solid";
 </script>
 
 <script>
@@ -19,8 +19,12 @@ export default {
          videoService: false,
          sound: false,
          show: false,
+         concert: false,
+         live: false,
          total: 0,
-         emailSent: false,
+         popup: false,
+         error: false,
+         errorMessage: "",
       };
    },
    async mounted() {
@@ -42,6 +46,8 @@ export default {
       },
       calculatePrice() {},
       async sendEmail() {
+         this.error = false;
+
          let nev = this.$refs.nameInput.value;
          let email = this.$refs.mailInput.value;
          let telefon = this.$refs.phoneInput.value;
@@ -49,32 +55,61 @@ export default {
          let helyszin = this.$refs.locationInput.value;
          let letszam = this.$refs.numberOfPeopleInput.value;
          let extraReqs = this.$refs.extraReqs.value;
-         let sound = this.djService ? "Igen" : "Nem";
-         let show = this.djService ? "Igen" : "Nem";
+         let sound = this.sound ? "Igen" : "Nem";
+         let show = this.show ? "Igen" : "Nem";
+         let concert = this.concert ? "Igen" : "Nem";
+         let live = this.live ? "Igen" : "Nem";
          let dj = this.djService ? "Igen" : "Nem";
          let fenyek = this.lightsService ? "Igen" : "Nem";
          let foto = this.photoService ? "Igen" : "Nem";
          let video = this.videoService ? "Igen" : "Nem";
 
-         try {
-            const response = await axios.post("https://spdisco.hu/api.php", {
-               message: `${nev}|||${email}|||${telefon}|||${datum}|||${helyszin}|||${letszam}|||${extraReqs}|||${dj}|||${fenyek}|||${foto}|||${video}`,
-            });
+         if (!nev || !email) {
+            this.popup = true;
+            this.error = true;
 
-            console.log(response.data);
-         } catch (error) {
-            console.log(error);
+            scrollTo(0, 0);
+
+            this.errorMessage = "A csillagos mezőket kötelező kitölteni!";
+
+            setTimeout(() => {
+               this.popup = false;
+            }, 3500);
+
+            return 0;
+         } else {
+            try {
+               const response = await axios.post("https://spdisco.hu/api.php", {
+                  message: `${nev}|||${email}|||${telefon}|||${datum}|||${helyszin}|||${letszam}|||${extraReqs}|||${sound}|||${show}|||${concert}|||${live}|||${dj}|||${fenyek}|||${foto}|||${video}`,
+               });
+
+               console.log(response.data);
+            } catch (error) {
+               this.popup = true;
+               this.error = true;
+
+               scrollTo(0, 0);
+
+               this.errorMessage = "Ismeretlen hiba történt!";
+
+               setTimeout(() => {
+                  this.popup = false;
+               }, 3500);
+
+               console.log(error);
+               return 0;
+            }
+
+            this.$refs.main.style.overflow = "hidden";
+
+            this.popup = true;
+
+            scrollTo(0, 0);
+
+            setTimeout(() => {
+               this.$router.push("/");
+            }, 3500);
          }
-
-         this.$refs.main.style.overflow = "hidden";
-
-         this.emailSent = true;
-
-         scrollTo(0, 0);
-
-         setTimeout(() => {
-            this.$router.push("/");
-         }, 3500);
       },
    },
 };
@@ -82,7 +117,7 @@ export default {
 
 <template>
    <div ref="main" class="flex flex-col items-center w-vw-full min-h-screen bg-ui-background relative">
-      <div ref="header" class="flex justify-center items-center w-full py-4 fixed top-0 bg-ui-background z-50">
+      <div ref="header" :class="{ 'filter blur pointer-events-none': popup, '': !popup }" class="flex justify-center items-center w-full py-4 fixed top-0 bg-ui-background z-50">
          <div class="basis-1/3 flex justify-start items-center w-full cursor-pointer">
             <h1 ref="backButton" class="flex justify-center items-center ml-5 text-white hover:text-gray-400 text-xl dm-sans-medium"><ArrowLeftIcon class="mr-1 size-8 text-xl" />Vissza</h1>
          </div>
@@ -92,19 +127,20 @@ export default {
          <span class="basis-1/3"></span>
       </div>
 
-      <div ref="popup" v-if="emailSent" class="flex justify-center items-center absolute top-64 z-50">
-         <h1 class="text-white dm-sans-medium p-12 text-xl bg-ui-background ring-ui-ring ring-1 rounded-xl">A kérését <span class="text-ui-primary">fogadtuk</span>, hamarosan válaszolunk, további szép napot!</h1>
+      <div ref="popup" v-if="popup" class="flex justify-center items-center absolute top-64 z-50">
+         <h1 v-if="error" class="text-red-500 dm-sans-medium p-12 text-xl bg-ui-background ring-ui-ring ring-1 rounded-xl">{{ errorMessage }}</h1>
+         <h1 v-else class="text-white dm-sans-medium p-12 text-xl bg-ui-background ring-ui-ring ring-1 rounded-xl">A kérését <span class="text-ui-primary">fogadtuk</span>, hamarosan válaszolunk, további szép napot!</h1>
       </div>
 
-      <div ref="content" class="flex flex-col lg:flex-row justify-center items-start pb-24">
+      <div ref="content" :class="{ 'filter blur pointer-events-none': popup, '': !popup }" class="flex flex-col lg:flex-row justify-center items-start pb-24">
          <div class="flex flex-col justify-center items-start w-full h-full gap-12 pb-16 pt-8 lg:pt-0 lg:pb-0 lg:basis-1/2">
             <div class="flex flex-col justify-center items-center w-full gap-2">
-               <h2 class="flex justify-left items-center text-white text-2xl dm-sans-semibold w-3/4">Név</h2>
+               <h2 class="flex justify-left items-center text-white text-2xl dm-sans-semibold w-3/4">Név<span>*</span></h2>
                <input ref="nameInput" class="flex justify-center items-center dm-sans-regular rounded-lg ring-ui-ring ring-1 bg-ui-card text-gray-300 w-3/4 py-2 px-4" type="text" name="" id="" />
             </div>
 
             <div class="flex flex-col justify-center items-center w-full gap-2">
-               <h2 class="flex justify-left items-center text-white text-2xl dm-sans-semibold w-3/4">E-mail</h2>
+               <h2 class="flex justify-left items-center text-white text-2xl dm-sans-semibold w-3/4">E-mail<span>*</span></h2>
                <input ref="mailInput" class="flex justify-center items-center dm-sans-regular rounded-lg ring-ui-ring ring-1 bg-ui-card text-gray-300 w-3/4 py-2 px-4" type="text" name="" id="" />
             </div>
 
@@ -114,10 +150,8 @@ export default {
             </div>
 
             <div class="flex flex-col justify-center items-center w-full gap-2">
-               <h2 class="flex justify-left items-center text-white text-2xl dm-sans-semibold w-3/4">Esemény dátuma</h2>
-               <div class="flex justify-center items-center w-3/4 rounded-xl">
-                  <VueDatePicker v-model="date" dark />
-               </div>
+               <h2 class="flex justify-left items-center text-white text-2xl dm-sans-semibold w-3/4">Létszám</h2>
+               <input ref="numberOfPeopleInput" class="flex justify-center items-center dm-sans-regular rounded-lg ring-ui-ring ring-1 bg-ui-card text-gray-300 w-3/4 py-2 px-4" type="text" name="" id="" />
             </div>
 
             <div class="flex flex-col justify-center items-center w-full gap-2">
@@ -126,8 +160,10 @@ export default {
             </div>
 
             <div class="flex flex-col justify-center items-center w-full gap-2">
-               <h2 class="flex justify-left items-center text-white text-2xl dm-sans-semibold w-3/4">Létszám</h2>
-               <input ref="numberOfPeopleInput" class="flex justify-center items-center dm-sans-regular rounded-lg ring-ui-ring ring-1 bg-ui-card text-gray-300 w-3/4 py-2 px-4" type="text" name="" id="" />
+               <h2 class="flex justify-left items-center text-white text-2xl dm-sans-semibold w-3/4">Esemény dátuma</h2>
+               <div class="flex justify-center items-center w-3/4 rounded-xl">
+                  <VueDatePicker v-model="date" dark />
+               </div>
             </div>
 
             <div class="flex flex-col justify-center items-center w-full gap-2">
@@ -153,7 +189,20 @@ export default {
                            </div>
 
                            <div class="flex justify-center items-center basis-2/3 w-full">
-                              <p class="text-left dm-sans-regular text-gray-300">Hangtechnikai felszereltségünk alkalmas kis, közepes vagy nagy rendezvények, akár élő zenekar hangosítására.</p>
+                              <p class="text-left dm-sans-regular text-gray-300">Hangtechnikai felszereltségünk alkalmas kis, közepes vagy nagy rendezvények hangosítására.</p>
+                           </div>
+                        </div>
+                     </div>
+
+                     <div @click="concert = !concert" :class="{ 'ring-ui-primary ring-2': concert, 'ring-ui-ring ring-2': !concert }" class="flex justify-center items-center w-full h-full bg-ui-card rounded-xl p-4 cursor-pointer">
+                        <div class="flex flex-col justify-center items-start w-full h-full pointer-events-none select-none">
+                           <div class="flex justify-between items-center basis-1/3 w-full mb-3">
+                              <h2 class="text-center text-white dm-sans-medium">Élő koncert</h2>
+                              <h2 class="text-center text-white dm-sans-medium"><UsersIcon class="size-6 fill-white" /></h2>
+                           </div>
+
+                           <div class="flex justify-center items-center basis-2/3 w-full">
+                              <p class="text-left dm-sans-regular text-gray-300">Koncert hangosítási szolgáltatásunk a tökéletes hangélményt nyújtja kisebb szabadtéri előadásokon is.</p>
                            </div>
                         </div>
                      </div>
@@ -223,7 +272,7 @@ export default {
                         </div>
                      </div>
 
-                     <div @click="videoService = !videoService" :class="{ 'ring-ui-primary ring-2': videoService, 'ring-ui-ring ring-2': !videoService }" class="flex justify-center items-center w-full h-full bg-ui-card rounded-xl p-4 cursor-pointer">
+                     <div @click="live = !live" :class="{ 'ring-ui-primary ring-2': live, 'ring-ui-ring ring-2': !live }" class="flex justify-center items-center w-full h-full bg-ui-card rounded-xl p-4 cursor-pointer">
                         <div class="flex flex-col justify-center items-start w-full h-full pointer-events-none select-none">
                            <div class="flex justify-between items-center basis-1/3 w-full mb-3">
                               <h2 class="text-center text-white dm-sans-medium">Élő közvetítés</h2>
@@ -235,7 +284,6 @@ export default {
                            </div>
                         </div>
                      </div>
-
                   </div>
                </div>
 

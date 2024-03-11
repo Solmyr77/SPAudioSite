@@ -40,6 +40,9 @@ export default {
             let pricingDistanceToTop = window.scrollY + this.$refs.pricing.getBoundingClientRect().top - this.$refs.header.clientHeight;
             let pricingBottomDistanceToTop = window.scrollY + this.$refs.pricing.getBoundingClientRect().bottom;
 
+            let technologyDistanceToTop = window.scrollY + this.$refs.technology.getBoundingClientRect().top - this.$refs.header.clientHeight;
+            let technologyBottomDistanceToTop = window.scrollY + this.$refs.technology.getBoundingClientRect().bottom;
+
             let reviewsDistanceToTop = window.scrollY + this.$refs.reviews.getBoundingClientRect().top - this.$refs.header.clientHeight;
             let reviewsBottomDistanceToTop = window.scrollY + this.$refs.reviews.getBoundingClientRect().bottom;
 
@@ -49,6 +52,8 @@ export default {
                this.activeMenuItem = "pricing";
             } else if (scrollY + viewPortHeight / 2 >= reviewsDistanceToTop && scrollY + viewPortHeight / 2 <= reviewsBottomDistanceToTop) {
                this.activeMenuItem = "reviews";
+            } else if (scrollY + viewPortHeight / 2 >= technologyDistanceToTop && scrollY + viewPortHeight / 2 <= technologyBottomDistanceToTop) {
+               this.activeMenuItem = "technology";
             } else {
                this.activeMenuItem = "none";
             }
@@ -78,6 +83,11 @@ export default {
             case "reviews":
                this.scrollAction(this.$refs.reviews);
                this.activeMenuItem = "reviews";
+               break;
+
+            case "technology":
+               this.scrollAction(this.$refs.technology);
+               this.activeMenuItem = "technology";
                break;
          }
       },
@@ -121,6 +131,10 @@ export default {
 
                <div class="px-4 py-1.5">
                   <p @click="scrollToElement('pricing')" :class="{ 'text-white': activeMenuItem == 'pricing', 'text-gray-400': activeMenuItem != 'pricing' }" class="text-sm cursor-pointer transition-opacity">Árajánlat</p>
+               </div>
+
+               <div class="px-4 py-1.5">
+                  <p @click="scrollToElement('technology')" :class="{ 'text-white': activeMenuItem == 'technology', 'text-gray-400': activeMenuItem != 'technology' }" class="text-sm cursor-pointer transition-opacity">Technika</p>
                </div>
 
                <div class="px-4 py-1.5">
@@ -294,7 +308,7 @@ export default {
          <div class="flex flex-col w-full max-w-7xl md:px-8 justify-center items-center">
             <h2 class="text-ui-primary text-base/7 dm-sans-semibold antialiased text-center">Technika</h2>
             <h2 class="text-3xl lg:text-5xl dm-sans-bold antialiased text-white tracking-tight text-center">Rendelkezésre álló technika</h2>
-            <p class="mt-6 text-lg/8 text-gray-300 dm-sans-regular text-center">Válasszon minket, hogy garantáltan felejthetetlenné varázsoljuk rendezvényét a legfrissebb technikai megoldásokkal és profi szolgáltatásainkkal!</p>
+            <p class="mt-6 text-lg/8 text-gray-300 dm-sans-regular text-center">A rendelkezésre álló teljes technikánk lenyűgöző előadásokat tesz lehetővé minden rendezvényen.</p>
          </div>
 
          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2 gap-8 mt-24">
@@ -419,7 +433,7 @@ export default {
 
                   <div>
                      <div class="text-white dm-sans-bold antialiased">Hangmodulok</div>
-                     <div class="text-gray-400 mt-1 dm-sans-regular">A Focusrite Scarlett 18i20 hangmodulok teszik lehetővé a több sávos élő felvételek készítését, biztosítva a kiváló hangminőséget és sokoldalúságot.</div>
+                     <div class="text-gray-400 mt-1 dm-sans-regular">A Focusrite Scarlett 18i20 teszi lehetővé a több sávos élő felvételek készítését, biztosítva a kiváló hangminőséget és sokoldalúságot.</div>
                   </div>
                </div>
             </div>
