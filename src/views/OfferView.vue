@@ -1,5 +1,4 @@
 <script setup>
-// import { FacebookIcon, InstagramIcon, XIcon, SoundCloudIcon, YouTubeIcon } from "vue3-simple-icons";
 import { ArrowRightIcon, ArrowLeftIcon, MusicalNoteIcon, LightBulbIcon, CameraIcon, VideoCameraIcon, SpeakerWaveIcon, MicrophoneIcon, FilmIcon, UsersIcon } from "@heroicons/vue/24/solid";
 </script>
 
@@ -44,7 +43,10 @@ export default {
 
          this.$refs.content.style.marginTop = `${headerHeight}px`;
       },
-      calculatePrice() {},
+      termTest() {
+         let currentDate = new Date();
+         this.$router.push({name: "aszf", params: {termName: this.$refs.nameInput.value, currentDate: currentDate}});
+      },
       async sendEmail() {
          this.error = false;
 
@@ -287,8 +289,8 @@ export default {
                   </div>
                </div>
 
-               <div class="flex justify-center items-center basis-1/3 pb-8 lg:pb-0">
-                  <button @click="sendEmail()" ref="offerButton" class="rounded-full flex justify-center items-center border-none dm-sans-semibold bg-white hover:bg-gray-400 transition-colors px-6 py-3 text-4xl">
+               <div class="flex flex-col justify-center items-center basis-1/3 pb-8 lg:pb-0">
+                  <button @click="termTest()" ref="offerButton" class="rounded-full flex justify-center items-center border-none dm-sans-semibold bg-white hover:bg-gray-400 transition-colors px-6 py-3 text-4xl">
                      Küldés
                      <ArrowRightIcon class="ml-2 size-16 text-xl" />
                   </button>
