@@ -307,7 +307,7 @@ export default {
 
                   <div>
                      <div class="text-white dm-sans-bold antialiased">HK Audio Rendszer</div>
-                     <div class="text-gray-400 mt-1 dm-sans-regular break-words">A HK Audio rendszereket a kiváló hangminőség, a megbízhatóság és a tartósság jellemzi.</div>
+                     <div class="text-gray-400 mt-1 dm-sans-regular break-words">A HK PR:O 15" top és 18" szub ládáinak kombinációja rendkívül erőteljes hangzást biztosít, kiváló hangminőség mellett, ami ideális választás akár élő rendezvényekhez.</div>
                   </div>
                </div>
             </div>
@@ -335,7 +335,7 @@ export default {
 
                   <div>
                      <div class="text-white dm-sans-bold antialiased">Monitor rendszer</div>
-                     <div class="text-gray-400 mt-1 dm-sans-regular">Csapatunk olyan tapasztalt szakemberekből áll, akik évek óta tevékenykednek a hang- és fénytechnika területén.</div>
+                     <div class="text-gray-400 mt-1 dm-sans-regular">A színpadon álló minden hangot tökéletes pontossággal hallhat a monitor rendszerünkből, így biztosítva a maximális élményt és a kényelmet a fellépőknek.</div>
                   </div>
                </div>
             </div>
@@ -349,7 +349,7 @@ export default {
 
                   <div>
                      <div class="text-white dm-sans-bold antialiased">Vezeték nélküli rendszer</div>
-                     <div class="text-gray-400 mt-1 dm-sans-regular">Csapatunk olyan tapasztalt szakemberekből áll, akik évek óta tevékenykednek a hang- és fénytechnika területén.</div>
+                     <div class="text-gray-400 mt-1 dm-sans-regular">A RODE vezeték nélküli mikrofonok és az ACCSOON vezeték nélküli videó rendszer kombinációja tökéletesen sima felvételeket és stream-elést tesz lehetővé.</div>
                   </div>
                </div>
             </div>
@@ -363,7 +363,7 @@ export default {
 
                   <div>
                      <div class="text-white dm-sans-bold antialiased">DJ Kontroller</div>
-                     <div class="text-gray-400 mt-1 dm-sans-regular">Csapatunk olyan tapasztalt szakemberekből áll, akik évek óta tevékenykednek a hang- és fénytechnika területén.</div>
+                     <div class="text-gray-400 mt-1 dm-sans-regular">A Pioneer FLX6 DJ kontroller és a MacBook Pro kombinációja tökéletesen összehangolt, professzionális DJ élményt nyújt minden alkalommal.</div>
                   </div>
                </div>
             </div>
@@ -377,7 +377,7 @@ export default {
 
                   <div>
                      <div class="text-white dm-sans-bold antialiased">Keverők</div>
-                     <div class="text-gray-400 mt-1 dm-sans-regular">Csapatunk olyan tapasztalt szakemberekből áll, akik évek óta tevékenykednek a hang- és fénytechnika területén.</div>
+                     <div class="text-gray-400 mt-1 dm-sans-regular">A BlackMagic ATEM videókeverő és a Zoom L12-es digitális keverőpult egyesítése az audiovizuális élmény legmagasabb szintjét garantálja minden előadáson és eseményen.</div>
                   </div>
                </div>
             </div>
@@ -391,7 +391,7 @@ export default {
 
                   <div>
                      <div class="text-white dm-sans-bold antialiased">Fotótechnika</div>
-                     <div class="text-gray-400 mt-1 dm-sans-regular">Csapatunk olyan tapasztalt szakemberekből áll, akik évek óta tevékenykednek a hang- és fénytechnika területén.</div>
+                     <div class="text-gray-400 mt-1 dm-sans-regular">A Canon termékeit használjuk, hogy minden pillanat tökéletesen legyen megörökítve az elmosódás mentes képekért.</div>
                   </div>
                </div>
             </div>
@@ -405,7 +405,7 @@ export default {
 
                   <div>
                      <div class="text-white dm-sans-bold antialiased">Videótechnika</div>
-                     <div class="text-gray-400 mt-1 dm-sans-regular">Csapatunk olyan tapasztalt szakemberekből áll, akik évek óta tevékenykednek a hang- és fénytechnika területén.</div>
+                     <div class="text-gray-400 mt-1 dm-sans-regular">A Sony AX43 és AX700 profi 4K kameráik garanciát jelentenek a tökéletes képminőségű videók létrehozásában.</div>
                   </div>
                </div>
             </div>
@@ -419,7 +419,7 @@ export default {
 
                   <div>
                      <div class="text-white dm-sans-bold antialiased">Hangmodulok</div>
-                     <div class="text-gray-400 mt-1 dm-sans-regular">Csapatunk olyan tapasztalt szakemberekből áll, akik évek óta tevékenykednek a hang- és fénytechnika területén.</div>
+                     <div class="text-gray-400 mt-1 dm-sans-regular">A Focusrite Scarlett 18i20 hangmodulok teszik lehetővé a több sávos élő felvételek készítését, biztosítva a kiváló hangminőséget és sokoldalúságot.</div>
                   </div>
                </div>
             </div>
