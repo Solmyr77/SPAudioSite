@@ -3,6 +3,11 @@ header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
 
+require_once('PHPMailer.php');
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 $data = json_decode(file_get_contents('php://input'), true);
 
 class Mail {
@@ -24,6 +29,7 @@ class Mail {
     public $fenyek;
     public $foto;
     public $video;
+    public $datumASZF;
 
     function __construct($rawMessage) {
         $splitMessage = explode("|||", $rawMessage);
@@ -43,13 +49,23 @@ class Mail {
         $this->fenyek = $splitMessage[12];
         $this->foto = $splitMessage[13];
         $this->video = $splitMessage[14];
+        $this->datumASZF = $splitMessage[15];
 
-        $this->finalMessage = "Név: $this->nev\nEmail: $this->email\nTelefon: $this->telefon\nDátum: $this->datum\nHelyszín: $this->helyszin\nLétszám: $this->letszam\nEgyéb kérések: $this->extraReqs\nHangosítás: $this->sound\nMűsorvezetés: $this->show\nÉlő koncert: $this->concert\nÉlő közvetítés: $this->live\nDJ: $this->dj\nFények: $this->fenyek\nFotós: $this->foto\nVideós: $this->video";
+        $this->finalMessage = "Név: $this->nev\nEmail: $this->email\nTelefon: $this->telefon\nDátum: $this->datum\nHelyszín: $this->helyszin\nLétszám: $this->letszam\nEgyéb kérések: $this->extraReqs\nHangosítás: $this->sound\nMűsorvezetés: $this->show\nÉlő koncert: $this->concert\nÉlő közvetítés: $this->live\nDJ: $this->dj\nFények: $this->fenyek\nFotós: $this->foto\nVideós: $this->video\nÁSZF Elfogadás dátuma: $this->datumASZF";
     }
 
     function sendEmail() {
-        mail($this->email, "SP Audio Visszaigazolás", $this->finalMessage, $this->headers);
-        return mail("hang@spdisco.hu", "SP Audio !FONTOS!", $this->finalMessage, $this->headers);
+        $email = new PHPMailer();
+        $email->CharSet = "UTF-8"; 
+        $email->SetFrom('hang@spdisco.hu', 'Sándor Péter');
+        $email->Subject   = 'Visszaigazolás - SP Audio';
+        $email->Body      = $this->finalMessage;
+        $email->AddAddress( 'hang@spdisco.hu' );
+
+        // $file_to_attach = 'PATH_OF_YOUR_FILE_HERE';
+        // $email->AddAttachment( $file_to_attach , 'NameOfFile.pdf' );
+
+        return $email->Send();
     }
 }
 
@@ -64,5 +80,3 @@ if (isset($data['message'])) {
 } else {
     echo json_encode(['status' => 'error', 'message' => 'No message received']);
 }
-
-?>

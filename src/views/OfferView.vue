@@ -45,7 +45,7 @@ export default {
       },
       termTest() {
          let currentDate = new Date();
-         this.$router.push({name: "aszf", params: {termName: this.$refs.nameInput.value, currentDate: currentDate}});
+         this.$router.push({ name: "aszf", params: { termName: this.$refs.nameInput.value, currentDate: currentDate } });
       },
       async sendEmail() {
          this.error = false;
@@ -66,6 +66,20 @@ export default {
          let foto = this.photoService ? "Igen" : "Nem";
          let video = this.videoService ? "Igen" : "Nem";
 
+         if (!this.$refs.termsAcceptCheckbox.checked) {
+            this.popup = true;
+            this.error = true;
+
+            scrollTo(0, 0);
+
+            this.errorMessage = "Az ÁSZF-et kötelező elfogadni!";
+
+            setTimeout(() => {
+               this.popup = false;
+            }, 3500);
+
+            return 0;
+         }
          if (!nev || !email) {
             this.popup = true;
             this.error = true;
@@ -82,7 +96,7 @@ export default {
          } else {
             try {
                const response = await axios.post("https://spdisco.hu/api.php", {
-                  message: `${nev}|||${email}|||${telefon}|||${datum}|||${helyszin}|||${letszam}|||${extraReqs}|||${sound}|||${show}|||${concert}|||${live}|||${dj}|||${fenyek}|||${foto}|||${video}`,
+                  message: `${nev}|||${email}|||${telefon}|||${datum}|||${helyszin}|||${letszam}|||${extraReqs}|||${sound}|||${show}|||${concert}|||${live}|||${dj}|||${fenyek}|||${foto}|||${video}|||${new Date()}`,
                });
 
                console.log(response.data);
@@ -136,6 +150,10 @@ export default {
 
       <div ref="content" :class="{ 'filter blur pointer-events-none': popup, '': !popup }" class="flex flex-col lg:flex-row justify-center items-start pb-24">
          <div class="flex flex-col justify-center items-start w-full h-full gap-12 pb-16 pt-8 lg:pt-0 lg:pb-0 lg:basis-1/2">
+            <div class="flex flex-col h-16 justify-center items-center w-full">
+               <h1 class="text-white text-4xl dm-sans-bold mt-3">Megrendelő adatai</h1>
+               <p class="text-gray-300 text-lg dm-sans-regular text-center mt-3 px-2">Adja meg az elérhetőségeket és a rendezvény körülményeit!</p>
+            </div>
             <div class="flex flex-col justify-center items-center w-full gap-2">
                <h2 class="flex justify-left items-center text-white text-2xl dm-sans-semibold w-3/4">Név<span>*</span></h2>
                <input ref="nameInput" class="flex justify-center items-center dm-sans-regular rounded-lg ring-ui-ring ring-1 bg-ui-card text-gray-300 w-3/4 py-2 px-4" type="text" name="" id="" />
@@ -289,8 +307,14 @@ export default {
                   </div>
                </div>
 
-               <div class="flex flex-col justify-center items-center basis-1/3 pb-8 lg:pb-0">
-                  <button @click="termTest()" ref="offerButton" class="rounded-full flex justify-center items-center border-none dm-sans-semibold bg-white hover:bg-gray-400 transition-colors px-6 py-3 text-4xl">
+               <div class="flex flex-col justify-center items-center basis-1/3 pb-10 lg:pb-0">
+                  <div class="flex w-full justify-center items-center mb-12 lg:mb-3">
+                     <div class="flex justify-center items-center w-4/5 lg:w-full">
+                        <input ref="termsAcceptCheckbox" class="size-4 mr-3 accent-ui-primary" type="checkbox" name="termsAccept" />
+                        <p class="text-gray-300 dm-sans-regular text-left">Elolvastam és elfogadom az <a target="_blank" class="text-ui-primary hover:text-violet-300" href="https://spdisco.hu/aszf.html">Általános Szerződési Feltételeket</a>.</p>
+                     </div>
+                  </div>
+                  <button @click="sendEmail()" ref="offerButton" class="rounded-full flex justify-center items-center border-none dm-sans-semibold bg-white hover:bg-gray-400 transition-colors px-6 py-3 text-4xl">
                      Küldés
                      <ArrowRightIcon class="ml-2 size-16 text-xl" />
                   </button>
@@ -301,4 +325,6 @@ export default {
    </div>
 </template>
 
-<style></style>
+<style>
+@import "../assets/main.css";
+</style>
