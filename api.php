@@ -11,8 +11,6 @@ use PHPMailer\PHPMailer\Exception;
 $data = json_decode(file_get_contents('php://input'), true);
 
 class Mail {
-    public $headers = "Content-Type: application/json; charset=utf-8";
-
     public $nev;
     public $email;
     public $telefon;
@@ -55,17 +53,26 @@ class Mail {
     }
 
     function sendEmail() {
-        $email = new PHPMailer();
-        $email->CharSet = "UTF-8"; 
-        $email->SetFrom('hang@spdisco.hu', 'Sándor Péter');
-        $email->Subject   = 'Visszaigazolás - SP Audio';
-        $email->Body      = $this->finalMessage;
-        $email->AddAddress( 'hang@spdisco.hu' );
+        $autoResponse = "Tisztelt $this->nev,\nKöszönjük érdeklődését és a rendezvény részletes adatait! Örömmel értesítjük, hogy a következő információk alapján sikeresen rögzítettük a rendelést:\n\nRendelési részletek:\nNév: $this->nev\nEmail: $this->email\nTelefon: $this->telefon\nDátum: $this->datum\nHelyszín: $this->helyszin\nLétszám: $this->letszam\nEgyéb kérések: $this->extraReqs\n\nKiválasztott szolgáltatások:\nHangosítás: $this->sound\nMűsorvezetés: $this->show\nÉlő koncert: $this->concert\nÉlő közvetítés: $this->live\nDJ: $this->dj\nFények: $this->fenyek\nFotós: $this->foto\nVideós: $this->video\n\nKérjük, ellenőrizze a rendelési részleteket. Ha bármilyen változtatást vagy további kérdést szeretne feltenni, kérjük, lépjen kapcsolatba velünk az alábbi elérhetőségek valamelyikén.\n\nKöszönjük, hogy minket választott!\n\nÜdvözlettel,\nSándor Péter E.V.";
 
-        // $file_to_attach = 'PATH_OF_YOUR_FILE_HERE';
-        // $email->AddAttachment( $file_to_attach , 'NameOfFile.pdf' );
+        $adminEmail = new PHPMailer();
+        $adminEmail->CharSet = "UTF-8"; 
+        $adminEmail->SetFrom('hang@spdisco.hu', 'Sándor Péter');
+        $adminEmail->Subject   = 'Árajánlat kérelem !FONTOS!';
+        $adminEmail->Body      = $this->finalMessage;
+        $adminEmail->AddAddress( 'hang@spdisco.hu' );
+        $adminEmail->Send();
 
-        return $email->Send();
+        $customerEmail = new PHPMailer();
+        $customerEmail->CharSet = "UTF-8"; 
+        $customerEmail->SetFrom('hang@spdisco.hu', 'Sándor Péter');
+        $customerEmail->Subject   = 'Visszaigazolás - SP Audio';
+        $customerEmail->Body      = $autoResponse;
+        $customerEmail->AddAddress( 'hang@spdisco.hu' );
+        $customerEmail->addCC( $this->email );
+        $customerEmail->Send();
+
+        return $customerEmail->Send();
     }
 }
 

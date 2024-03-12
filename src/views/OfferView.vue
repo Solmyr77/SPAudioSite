@@ -66,6 +66,13 @@ export default {
          let foto = this.photoService ? "Igen" : "Nem";
          let video = this.videoService ? "Igen" : "Nem";
 
+         datum = new Date(datum);
+
+         let readableDate = `${datum.getFullYear()}.${datum.getMonth() + 1}.${datum.getDate()}. ${datum.getHours()}:${datum.getMinutes()}:${datum.getSeconds()}`
+
+         let termsDate = new Date();
+         let readableTermsDate = `${termsDate.getFullYear()}.${termsDate.getMonth() + 1}.${termsDate.getDate()}. ${termsDate.getHours()}:${termsDate.getMinutes()}:${termsDate.getSeconds()}`
+
          if (!this.$refs.termsAcceptCheckbox.checked) {
             this.popup = true;
             this.error = true;
@@ -96,7 +103,7 @@ export default {
          } else {
             try {
                const response = await axios.post("https://spdisco.hu/api.php", {
-                  message: `${nev}|||${email}|||${telefon}|||${datum}|||${helyszin}|||${letszam}|||${extraReqs}|||${sound}|||${show}|||${concert}|||${live}|||${dj}|||${fenyek}|||${foto}|||${video}|||${new Date()}`,
+                  message: `${nev}|||${email}|||${telefon}|||${readableDate}|||${helyszin}|||${letszam}|||${extraReqs}|||${sound}|||${show}|||${concert}|||${live}|||${dj}|||${fenyek}|||${foto}|||${video}|||${readableTermsDate}`,
                });
 
                console.log(response.data);
