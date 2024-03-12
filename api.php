@@ -70,7 +70,6 @@ class Mail {
         $customerEmail->Body      = $autoResponse;
         $customerEmail->AddAddress( 'hang@spdisco.hu' );
         $customerEmail->addCC( $this->email );
-        $customerEmail->Send();
 
         return $customerEmail->Send();
     }
