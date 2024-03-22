@@ -307,7 +307,7 @@ export default {
                            </div>
 
                            <div class="flex justify-center items-center basis-2/3 w-full">
-                              <p class="text-left dm-sans-regular text-gray-300">Mozgóképet készítünk amivel felidézhetik az esemény hangulatát és pillanatait.</p>
+                              <p class="text-left dm-sans-regular text-gray-300">Válassza hang- és videostream szolgáltatásainkat, hogy a világ bármely országából csatlakozhassanak!</p>
                            </div>
                         </div>
                      </div>
