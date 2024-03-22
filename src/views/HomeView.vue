@@ -27,7 +27,6 @@ export default {
          this.$router.push("/arajanlat");
       });
 
-      this.loadImages();
       this.handlePromoImages();
    },
    beforeUnmount() {
