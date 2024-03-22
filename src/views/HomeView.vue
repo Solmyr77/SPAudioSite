@@ -1,9 +1,19 @@
 <script setup>
+import { VueMarqueeSlider } from 'vue3-marquee-slider';
 import { FacebookIcon, InstagramIcon, XIcon, SoundCloudIcon, YouTubeIcon } from "vue3-simple-icons";
 import { BuildingLibraryIcon, ArrowRightIcon, CogIcon, CheckIcon, UserIcon, SpeakerWaveIcon, CurrencyDollarIcon, ChartBarIcon, Bars3Icon, XMarkIcon, CubeIcon, CreditCardIcon, AcademicCapIcon, ChevronDownIcon, DocumentTextIcon } from "@heroicons/vue/24/solid";
 </script>
 
 <script>
+import '/src/assets/slider.css'
+
+class Image {
+   constructor(id) {
+      this.id = id;
+      this.path = `/src/images/${id}`;
+   }
+}
+
 export default {
    data() {
       return {
@@ -12,6 +22,7 @@ export default {
          contactMenu: false,
          isScrolling: false,
          cookieMenu: false,
+         images: [],
       };
    },
    async mounted() {
@@ -25,11 +36,31 @@ export default {
       this.$refs.titleOfferButton.addEventListener("click", () => {
          this.$router.push("/arajanlat");
       });
+
+      this.loadImages();
+      this.handlePromoImages();
    },
    beforeUnmount() {
       window.removeEventListener("scroll", this.handleScroll);
    },
    methods: {
+      handlePromoImages() {
+         this.$refs.promoImageContainer.style.backgroundImage = `url('src/images/img12.jpg')`;
+
+         let counter = 1;
+         setInterval(() => {
+            this.$refs.promoImageContainer.style.backgroundImage = `url('src/images/img${counter}.jpg')`;
+            counter++;
+            if (counter == 13) {
+               counter = 1;
+            }
+         }, 5000)
+      },
+      loadImages() {
+         for (let i = 1; i < 13; i++) {
+            this.images.push(new Image(`img${i}.jpg`));
+         }
+      },
       handleScroll() {
          document.onscrollend = () => {
             let viewPortHeight = window.innerHeight;
@@ -278,9 +309,7 @@ export default {
       <!--Promo image-->
       <div
          class="flex justify-center items-center p-4 rounded-xl max-w-7xl px-4 w-full h-full ring-1 ring-ui-ring mx-auto">
-         <div class="aspect-3/2 flex justify-center items-center h-full w-full">
-            <img class="rounded-xl" src="../images/img_promo.webp" alt="Promo image" title="Promo image" />
-         </div>
+         <div ref="promoImageContainer" class="aspect-3/2 flex justify-center items-center h-full w-full rounded-xl bg-cover ease-in-out duration-1000"></div>
       </div>
       <!--Promo image-->
 
