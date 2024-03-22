@@ -1,19 +1,9 @@
 <script setup>
-import { VueMarqueeSlider } from 'vue3-marquee-slider';
 import { FacebookIcon, InstagramIcon, XIcon, SoundCloudIcon, YouTubeIcon } from "vue3-simple-icons";
 import { BuildingLibraryIcon, ArrowRightIcon, CogIcon, CheckIcon, UserIcon, SpeakerWaveIcon, CurrencyDollarIcon, ChartBarIcon, Bars3Icon, XMarkIcon, CubeIcon, CreditCardIcon, AcademicCapIcon, ChevronDownIcon, DocumentTextIcon } from "@heroicons/vue/24/solid";
 </script>
 
 <script>
-import '/src/assets/slider.css'
-
-class Image {
-   constructor(id) {
-      this.id = id;
-      this.path = `/src/images/${id}`;
-   }
-}
-
 export default {
    data() {
       return {
@@ -45,21 +35,16 @@ export default {
    },
    methods: {
       handlePromoImages() {
-         this.$refs.promoImageContainer.style.backgroundImage = `url('src/images/img12.jpg')`;
+         this.$refs.promoImageContainer.style.backgroundImage = `url('./images/img_promo.webp')`;
 
          let counter = 1;
          setInterval(() => {
-            this.$refs.promoImageContainer.style.backgroundImage = `url('src/images/img${counter}.jpg')`;
+            this.$refs.promoImageContainer.style.backgroundImage = `url('./images/img${counter}.webp')`;
             counter++;
             if (counter == 13) {
                counter = 1;
             }
          }, 5000)
-      },
-      loadImages() {
-         for (let i = 1; i < 13; i++) {
-            this.images.push(new Image(`img${i}.jpg`));
-         }
       },
       handleScroll() {
          document.onscrollend = () => {
@@ -457,9 +442,9 @@ export default {
                <div class="flex flex-col justify-between items-start px-4 py-5 h-full">
                   <div class="flex justify-between items-center w-full">
                      <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-32"
-                           src="../images/tech/hksub.jpg" /></div>
+                           src="../images/tech/hksub.webp" /></div>
                      <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-32"
-                           src="../images/tech/hktop.jpg" /></div>
+                           src="../images/tech/hktop.webp" /></div>
                   </div>
 
                   <div>
@@ -475,9 +460,9 @@ export default {
                <div class="flex flex-col justify-between items-start px-4 py-5 h-full">
                   <div class="flex justify-between items-center w-full">
                      <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36"
-                           src="../images/tech/boxsub.png" /></div>
+                           src="../images/tech/boxsub.webp" /></div>
                      <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36"
-                           src="../images/tech/proline.png" /></div>
+                           src="../images/tech/proline.webp" /></div>
                   </div>
 
                   <div>
@@ -493,9 +478,9 @@ export default {
                <div class="flex flex-col justify-between items-start px-4 py-5 h-full">
                   <div class="flex justify-between items-center w-full">
                      <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl h-28 rotate-90"
-                           src="../images/tech/pdmonitor.png" /></div>
+                           src="../images/tech/pdmonitor.webp" /></div>
                      <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl h-40 rotate-90"
-                           src="../images/tech/fbmonitor.png" /></div>
+                           src="../images/tech/fbmonitor.webp" /></div>
                   </div>
 
                   <div>
@@ -511,7 +496,7 @@ export default {
                <div class="flex flex-col justify-between items-start px-4 py-5 h-full">
                   <div class="flex justify-between items-center w-full">
                      <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-32"
-                           src="../images/tech/rode1.png" /></div>
+                           src="../images/tech/rode1.webp" /></div>
                      <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-48"
                            src="../images/tech/acson.webp" /></div>
                   </div>
@@ -529,9 +514,9 @@ export default {
                <div class="flex flex-col justify-between items-start px-4 py-5 h-full">
                   <div class="flex justify-between items-center w-full">
                      <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36"
-                           src="../images/tech/flx6.png" /></div>
+                           src="../images/tech/flx6.webp" /></div>
                      <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36"
-                           src="../images/tech/mac.png" /></div>
+                           src="../images/tech/mac.webp" /></div>
                   </div>
 
                   <div>
@@ -546,9 +531,9 @@ export default {
                <div class="flex flex-col justify-between items-start px-4 py-5 h-full">
                   <div class="flex justify-between items-center w-full">
                      <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36"
-                           src="../images/tech/atem.png" /></div>
+                           src="../images/tech/atem.webp" /></div>
                      <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-32"
-                           src="../images/tech/zoommix.png" /></div>
+                           src="../images/tech/zoommix.webp" /></div>
                   </div>
 
                   <div>
@@ -564,9 +549,9 @@ export default {
                <div class="flex flex-col justify-between items-start px-4 py-5 h-full">
                   <div class="flex justify-between items-center w-full">
                      <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36"
-                           src="../images/tech/canoncam.png" /></div>
+                           src="../images/tech/canoncam.webp" /></div>
                      <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-32"
-                           src="../images/tech/lens.png" /></div>
+                           src="../images/tech/lens.webp" /></div>
                   </div>
 
                   <div>
@@ -581,9 +566,9 @@ export default {
                <div class="flex flex-col justify-between items-start px-4 py-5 h-full">
                   <div class="flex justify-between items-center w-full">
                      <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36"
-                           src="../images/tech/sonycam1.png" /></div>
+                           src="../images/tech/sonycam1.webp" /></div>
                      <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-32"
-                           src="../images/tech/sonycam2.png" /></div>
+                           src="../images/tech/sonycam2.webp" /></div>
                   </div>
 
                   <div>
@@ -598,9 +583,9 @@ export default {
                <div class="flex flex-col justify-between items-start px-4 py-5 h-full">
                   <div class="flex justify-between items-center w-full">
                      <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36"
-                           src="../images/tech/scarlett1.png" /></div>
+                           src="../images/tech/scarlett1.webp" /></div>
                      <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-40"
-                           src="../images/tech/scarlett.png" /></div>
+                           src="../images/tech/scarlett.webp" /></div>
                   </div>
 
                   <div>
