@@ -13,9 +13,25 @@ export default {
          isScrolling: false,
          cookieMenu: false,
          images: [],
+         imgLoadedFlag: false,
       };
    },
    async mounted() {
+      let allImages = [...document.querySelectorAll("img")];
+
+      const imgPromises = allImages.map(img => new Promise(response => img.onload = () => response([img.width, img.height])));
+
+      let start = Date.now();
+
+      console.log("Started image loading . . .")
+
+      Promise.all(imgPromises).then(data => {
+         console.log("All images have loaded!")
+         console.log(`Images have loaded in: ${Date.now() - start} ms`);
+         this.imgLoadedFlag = true;
+         this.handlePromoImages();
+      });
+
       window.addEventListener("scroll", this.handleScroll);
       this.handleScroll();
 
@@ -26,24 +42,25 @@ export default {
       this.$refs.titleOfferButton.addEventListener("click", () => {
          this.$router.push("/arajanlat");
       });
-
-      this.handlePromoImages();
    },
    beforeUnmount() {
       window.removeEventListener("scroll", this.handleScroll);
    },
    methods: {
       handlePromoImages() {
-         this.$refs.promoImageContainer.style.backgroundImage = `url('./images/img_promo.webp')`;
+         this.$nextTick(() => {
+            this.$refs.promoImageContainer.style.backgroundImage = `url(./images/img_promo.webp)`;
 
-         let counter = 1;
-         setInterval(() => {
-            this.$refs.promoImageContainer.style.backgroundImage = `url('./images/img${counter}.webp')`;
-            counter++;
-            if (counter == 13) {
-               counter = 1;
-            }
-         }, 5000)
+            let counter = 1;
+            setInterval(() => {
+               this.$refs.promoImageContainer.style.backgroundImage = `url(./images/img${counter}.webp)`;
+
+               counter++;
+               if (counter == 13) {
+                  counter = 1;
+               }
+            }, 3000)
+         });
       },
       handleScroll() {
          document.onscrollend = () => {
@@ -129,6 +146,7 @@ export default {
 <template>
    <!--Main-->
    <div class="flex flex-col justify-center items-center w-vw-full min-h-screen bg-ui-background relative">
+      <!--Cookie menu-->
       <div v-if="!cookieMenu"
          class="fixed bottom-12 left-1/2 z-50 -translate-x-1/2 rounded-full bg-ui-background p-2 max-sm:w-11/12 ring-1 ring-ui-ring"
          id="gdpr">
@@ -140,6 +158,7 @@ export default {
             </div>
          </div>
       </div>
+      <!--Cookie menu-->
 
       <!--Header-->
       <div ref="header"
@@ -291,9 +310,19 @@ export default {
       <!--Title body-->
 
       <!--Promo image-->
-      <div
-         class="flex justify-center items-center p-4 rounded-xl max-w-7xl px-4 w-full h-full ring-1 ring-ui-ring mx-auto">
-         <div ref="promoImageContainer" class="aspect-3/2 flex justify-center items-center h-full w-full rounded-xl bg-cover ease-in-out duration-1000"></div>
+      <div v-if="!imgLoadedFlag"
+         class="flex justify-center items-center p-2 lg:p-4 rounded-xl max-w-7xl w-full h-full ring-1 ring-ui-ring mx-auto">
+         <div ref="promoImageContainer" class="aspect-3/2 flex justify-center items-center h-full w-full rounded-xl">
+            <img src="/images/img_promo.webp" alt="Promo kép" title="Promo kép" class="rounded-xl">
+         </div>
+      </div>
+
+      <div v-else
+         class="flex justify-center items-center p-2 lg:p-4 rounded-xl max-w-7xl w-full h-full ring-1 ring-ui-ring mx-auto">
+
+         <div ref="promoImageContainer" alt="Promo képnézegető" title="Promo képnézegető"
+            class="aspect-3/2 flex justify-center items-center h-full w-full ease-in-out duration-1000 rounded-xl bg-cover">
+         </div>
       </div>
       <!--Promo image-->
 
@@ -440,9 +469,9 @@ export default {
             <div class="flex justify-center items-start rounded-xl ring-1 ring-ui-ring bg-ui-card">
                <div class="flex flex-col justify-between items-start px-4 py-5 h-full">
                   <div class="flex justify-between items-center w-full">
-                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-32"
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-32" alt="HK Sub" title="HK Sub"
                            src="../images/tech/hksub.webp" /></div>
-                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-32"
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-32" alt="HK Top" title="HK Top"
                            src="../images/tech/hktop.webp" /></div>
                   </div>
 
@@ -458,10 +487,10 @@ export default {
             <div class="flex justify-center items-start rounded-xl ring-1 ring-ui-ring bg-ui-card">
                <div class="flex flex-col justify-between items-start px-4 py-5 h-full">
                   <div class="flex justify-between items-center w-full">
-                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36"
-                           src="../images/tech/boxsub.webp" /></div>
-                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36"
-                           src="../images/tech/proline.webp" /></div>
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36" alt="the box Sub"
+                           title="the box Sub" src="../images/tech/boxsub.webp" /></div>
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36" alt="Proline erősító"
+                           title="Proline erősító" src="../images/tech/proline.webp" /></div>
                   </div>
 
                   <div>
@@ -477,9 +506,10 @@ export default {
                <div class="flex flex-col justify-between items-start px-4 py-5 h-full">
                   <div class="flex justify-between items-center w-full">
                      <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl h-28 rotate-90"
+                           alt="Power Dynamics Monitor" title="Power Dynamics Monitor"
                            src="../images/tech/pdmonitor.webp" /></div>
-                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl h-40 rotate-90"
-                           src="../images/tech/fbmonitor.webp" /></div>
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl h-40 rotate-90" alt="FBT Monitor"
+                           title="FBT Monitor" src="../images/tech/fbmonitor.webp" /></div>
                   </div>
 
                   <div>
@@ -494,9 +524,10 @@ export default {
             <div class="flex justify-center items-start rounded-xl ring-1 ring-ui-ring bg-ui-card">
                <div class="flex flex-col justify-between items-start px-4 py-5 h-full">
                   <div class="flex justify-between items-center w-full">
-                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-32"
-                           src="../images/tech/rode1.webp" /></div>
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-32" alt="Rode vezeték nélküli"
+                           title="Rode vezeték nélküli" src="../images/tech/rode1.webp" /></div>
                      <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-48"
+                           alt="Accsoon vezeték nélküli" title="Accsoon vezeték nélküli"
                            src="../images/tech/acson.webp" /></div>
                   </div>
 
@@ -512,10 +543,10 @@ export default {
             <div class="flex justify-center items-start rounded-xl ring-1 ring-ui-ring bg-ui-card">
                <div class="flex flex-col justify-between items-start px-4 py-5 h-full">
                   <div class="flex justify-between items-center w-full">
-                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36"
-                           src="../images/tech/flx6.webp" /></div>
-                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36"
-                           src="../images/tech/mac.webp" /></div>
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36" alt="FLX6 DJ Kontroller"
+                           title="FLX6 DJ Kontroller" src="../images/tech/flx6.webp" /></div>
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36" alt="Macbook Pro"
+                           title="Macbook Pro" src="../images/tech/mac.webp" /></div>
                   </div>
 
                   <div>
@@ -529,10 +560,10 @@ export default {
             <div class="flex justify-center items-start rounded-xl ring-1 ring-ui-ring bg-ui-card">
                <div class="flex flex-col justify-between items-start px-4 py-5 h-full">
                   <div class="flex justify-between items-center w-full">
-                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36"
-                           src="../images/tech/atem.webp" /></div>
-                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-32"
-                           src="../images/tech/zoommix.webp" /></div>
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36" alt="Atem videó mixer"
+                           title="Atem videó mixer" src="../images/tech/atem.webp" /></div>
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-32" alt="Zoom mixer"
+                           title="Zoom mixer" src="../images/tech/zoommix.webp" /></div>
                   </div>
 
                   <div>
@@ -547,10 +578,10 @@ export default {
             <div class="flex justify-center items-start rounded-xl ring-1 ring-ui-ring bg-ui-card">
                <div class="flex flex-col justify-between items-start px-4 py-5 h-full">
                   <div class="flex justify-between items-center w-full">
-                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36"
-                           src="../images/tech/canoncam.webp" /></div>
-                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-32"
-                           src="../images/tech/lens.webp" /></div>
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36" alt="Canon kamera"
+                           title="Canon kamera" src="../images/tech/canoncam.webp" /></div>
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-32" alt="Objektív"
+                           title="Objektív" src="../images/tech/lens.webp" /></div>
                   </div>
 
                   <div>
@@ -564,10 +595,10 @@ export default {
             <div class="flex justify-center items-start rounded-xl ring-1 ring-ui-ring bg-ui-card">
                <div class="flex flex-col justify-between items-start px-4 py-5 h-full">
                   <div class="flex justify-between items-center w-full">
-                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36"
-                           src="../images/tech/sonycam1.webp" /></div>
-                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-32"
-                           src="../images/tech/sonycam2.webp" /></div>
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36" alt="Sony kamera"
+                           title="Sony kamera" src="../images/tech/sonycam1.webp" /></div>
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-32" alt="Sony kamera"
+                           title="Sony kamera" src="../images/tech/sonycam2.webp" /></div>
                   </div>
 
                   <div>
@@ -581,10 +612,10 @@ export default {
             <div class="flex justify-center items-start rounded-xl ring-1 ring-ui-ring bg-ui-card">
                <div class="flex flex-col justify-between items-start px-4 py-5 h-full">
                   <div class="flex justify-between items-center w-full">
-                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36"
-                           src="../images/tech/scarlett1.webp" /></div>
-                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-40"
-                           src="../images/tech/scarlett.webp" /></div>
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-36" alt="Scarlett hangkártya"
+                           title="Scarlett hangkártya" src="../images/tech/scarlett1.webp" /></div>
+                     <div class="mb-3 mt-1 pointer-events-none"><img class="rounded-xl w-40" alt="Scarlett hangkártya"
+                           title="Scarlett hangkártya" src="../images/tech/scarlett.webp" /></div>
                   </div>
 
                   <div>
@@ -683,7 +714,7 @@ export default {
             <h2 class="text-5xl dm-sans-bold antialiased text-white tracking-tight text-center">Telephelyünk</h2>
          </div>
          <div class="flex justify-center items-center w-full max-w-7xl px-4">
-            <iframe class="rounded-xl ring-1 ring-ui-ring lg:w-full"
+            <iframe class="rounded-xl ring-1 ring-ui-ring lg:w-full" alt="Térkép" title="Térkép"
                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d666.5390231691204!2d20.78542805872192!3d48.06862989999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4740a1ffbd0dbd33%3A0xb1325a16661ea3b9!2shangtechnika%20-%20f%C3%A9nytechnika%20-%20DJ%20-%20esk%C3%BCv%C5%91%20-%20rendezv%C3%A9ny%20-%20Miskolc%20vonz%C3%A1sk%C3%B6rzet%C3%A9ben!5e0!3m2!1sen!2sca!4v1710000759765!5m2!1sen!2sca"
                width="600" height="450" style="border: 0" allowfullscreen="" loading="lazy"
                referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -761,6 +792,24 @@ export default {
       </div>
       <!--Footer-->
    </div>
+
+   <!--Img loader-->
+   <div class="hidden">
+      <img src="/images/img1.webp" alt="img1" title="img1">
+      <img src="/images/img2.webp" alt="img2" title="img2">
+      <img src="/images/img3.webp" alt="img3" title="img3">
+      <img src="/images/img4.webp" alt="img4" title="img4">
+      <img src="/images/img5.webp" alt="img6" title="img5">
+      <img src="/images/img6.webp" alt="img6" title="img6">
+      <img src="/images/img7.webp" alt="img7" title="img7">
+      <img src="/images/img8.webp" alt="img8" title="img8">
+      <img src="/images/img9.webp" alt="img9" title="img9">
+      <img src="/images/img10.webp" alt="img10" title="img10">
+      <img src="/images/img11.webp" alt="img11" title="img11">
+      <img src="/images/img12.webp" alt="img12" title="img12">
+   </div>
+   <!--Img loader-->
+
    <!--Main-->
 </template>
 
