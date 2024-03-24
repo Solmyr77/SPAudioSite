@@ -20,12 +20,12 @@ const router = createRouter({
       {
          path: "/zenekeres",
          name: "zenekeres",
-         component: () => import("../views/MusicView.vue"),
+         component: () => import("../views/legacy/MusicView.vue"),
       },
       {
          path: "/secret/admin",
          name: "admin",
-         component: () => import("../views/AdminView.vue"),
+         component: () => import("../views/legacy/AdminView.vue"),
       },
       {
          path: "/aszf/:termName:currentDate",
