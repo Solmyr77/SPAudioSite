@@ -32,11 +32,15 @@ w-vw-full {
 }
 
 .grid-cols-36 {
-   grid-template-columns: repeat(24, minmax(0, 1fr));
+   grid-template-columns: repeat(25, minmax(0, 1fr));
 }
 
 .col-span-27 {
    grid-column: span 18 / span 18;
+}
+
+.col-span-32 {
+   grid-column: span 17 / span 17;
 }
 
 .grid-rows-64 {

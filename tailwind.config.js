@@ -29,6 +29,14 @@ export default {
       },
       aspectRatio: {
         '3/2': '3 / 2'
+      },
+      keyframes: {
+        ping: {
+          '0%, 25%': { transform: 'scale(1.0)', opacity: '1'},
+          '25%, 50%': { transform: 'scale(1.02)', opacity: '1'},
+          '50%, 75%': { transform: 'scale(1.02)', opacity: '1'},
+          '75%, 100%': { transform: 'scale(1.0)', opacity: '1'},
+        }
       }
     },
   },

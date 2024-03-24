@@ -4,6 +4,15 @@ import { BuildingLibraryIcon, ArrowRightIcon, CogIcon, CheckIcon, UserIcon, Spea
 </script>
 
 <script>
+import PocketBase from "pocketbase";
+
+class Setting {
+   constructor(id, value) {
+      this.id = id;
+      this.value = value;
+   }
+}
+
 export default {
    data() {
       return {
@@ -14,6 +23,8 @@ export default {
          cookieMenu: false,
          images: [],
          imgLoadedFlag: false,
+         settingsCollection: undefined,
+         isMusicSiteEnabled: false,
       };
    },
    async mounted() {
@@ -42,11 +53,53 @@ export default {
       this.$refs.titleOfferButton.addEventListener("click", () => {
          this.$router.push("/arajanlat");
       });
+
+      this.pb = new PocketBase("https://sp.myddns.me/pb");
+      this.pb.autoCancellation(false);
+
+      this.settingsCollection = this.pb.collection("settings");
+      await this.getSettings();
+      this.settingsCollection.subscribe("*", () => this.getSettings());
+
+      window.addEventListener("hashchange", (event) => {
+         if(event.newURL.split("#")[1]) {
+            this.$router.push("/zenekeres");
+         }
+      })
    },
    beforeUnmount() {
       window.removeEventListener("scroll", this.handleScroll);
    },
    methods: {
+      async getSettings() {
+         await this.settingsCollection.getList(1, 4).then((settings) => {
+            settings.items.forEach((record) => {
+               if (record.setting == "votesVisible") {
+                  this.votesVisible = new Setting(record.id, record.value);
+               } else if (record.setting == "songsPerPerson") {
+                  this.songsPerPerson = new Setting(record.id, record.value);
+               } else if (record.setting == "songLimit") {
+                  this.songLimit = new Setting(record.id, record.value);
+               } else if (record.setting == "isEnabled") {
+                  this.isMusicSiteEnabled = new Setting(record.id, record.value);
+                  console.log(this.isMusicSiteEnabled.value);
+               }
+            });
+         });
+
+         if (this.isMusicSiteEnabled.value == 1) {
+            console.log("site is enabled");
+            this.isMusicSiteEnabled = true;
+
+            this.$refs.musicSiteButton.addEventListener("click", () => {
+               this.$router.push('/zenekeres')
+            });
+         }
+         else {
+            console.log("site is not enabled");
+            this.isMusicSiteEnabled = false;
+         }
+      },
       handlePromoImages() {
          this.$nextTick(() => {
             this.$refs.promoImageContainer.style.backgroundImage = `url(./images/img_promo.webp)`;
@@ -146,6 +199,7 @@ export default {
 <template>
    <!--Main-->
    <div class="flex flex-col justify-center items-center w-vw-full min-h-screen bg-ui-background relative">
+
       <!--Cookie menu-->
       <div v-if="!cookieMenu"
          class="fixed bottom-12 left-1/2 z-50 -translate-x-1/2 rounded-full bg-ui-background p-2 max-sm:w-11/12 ring-1 ring-ui-ring"
@@ -159,6 +213,20 @@ export default {
          </div>
       </div>
       <!--Cookie menu-->
+
+      <!--ZeneDoboz button-->
+      <div ref="musicSiteButtonContainer" v-if="isMusicSiteEnabled"
+         class="flex flex-col justify-center items-center pt-32 w-full h-full max-w-7xl px-8 mx-auto">
+         <div class="flex justify-center items-center text-white flex-col">
+            <h1 class="text-3xl lg:text-6xl dm-sans-bold text-ui-primary">Megy a buli!</h1>
+            <h3 class="text-2xl lg:text-3xl mt-4 text-center">A zenekérés az alábbi gomb megnyomásával érhető el!</h3>
+         </div>
+         <button ref="musicSiteButton"
+            class="animate-ping mt-12 text-4xl rounded-full flex justify-center items-center border-none dm-sans-medium bg-white px-24 py-8 lg:px-44 lg:py-12 hover:bg-gray-400 transition-colors">
+            Zenekérés
+         </button>
+      </div>
+      <!--ZeneDoboz button-->
 
       <!--Header-->
       <div ref="header"
