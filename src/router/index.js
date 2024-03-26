@@ -5,7 +5,7 @@ const router = createRouter({
    history: createWebHistory(import.meta.env.BASE_URL),
    routes: [
       {
-         path: "/",
+         path: "/zenekeres",
          name: "home",
          component: HomeView,
       },
@@ -18,14 +18,14 @@ const router = createRouter({
          component: () => import("../views/OfferView.vue"),
       },
       {
-         path: "/zenekeres",
+         path: "/",
          name: "zenekeres",
-         component: () => import("../views/legacy/MusicView.vue"),
+         component: () => import("../views/MusicView.vue"),
       },
       {
          path: "/secret/admin",
          name: "admin",
-         component: () => import("../views/legacy/AdminView.vue"),
+         component: () => import("../views/AdminView.vue"),
       },
       {
          path: "/aszf/:termName:currentDate",

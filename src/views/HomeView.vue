@@ -235,7 +235,7 @@ export default {
             <!--Inline title-->
             <div class="flex justify-start items-center cursor-pointer basis-1/3 select-none">
                <h1 @click="scrollToElement('top')"
-                  class="text-white text-xl dm-sans-bold antialiased hover:text-gray-400 transition-colors">SP Audio
+                  class="text-white text-xl dm-sans-bold antialiased hover:text-gray-400 transition-colors">DJ S.P.
                </h1>
             </div>
             <!--Inline title-->
@@ -302,7 +302,7 @@ export default {
          <div class="flex justify-between items-center w-full max-w-7xl px-8 h-full border-ui-ring border-b-2 py-4">
             <!--Inline title-->
             <div @click="scrollToElement('top')" class="flex justify-center items-center select-none">
-               <h1 class="text-white text-xl dm-sans-bold antialiased">SP Audio</h1>
+               <h1 class="text-white text-xl dm-sans-bold antialiased">DJ S.P.</h1>
             </div>
             <!--Inline title-->
 

@@ -11,6 +11,7 @@ export default {
         "ui-ring": "#27272A",
         "ui-primary": "#818CF8",
         "ui-card": "#18181b",
+        "ui-stone": "#1A181A",
         custom: {
           'bg-dark': 'rgb(32, 26, 23)',
           'custom-elevation-1': 'rgba(255, 255, 255, 0.08)',

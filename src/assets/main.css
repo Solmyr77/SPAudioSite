@@ -31,42 +31,6 @@ w-vw-full {
    background: #283341;
 }
 
-.grid-cols-36 {
-   grid-template-columns: repeat(25, minmax(0, 1fr));
-}
-
-.col-span-27 {
-   grid-column: span 18 / span 18;
-}
-
-.col-span-32 {
-   grid-column: span 17 / span 17;
-}
-
-.grid-rows-64 {
-   grid-template-rows: repeat(64, minmax(0, 1fr));
-}
-
-.row-span-12 {
-   grid-row: span 12 / span 12;
-}
-
-.row-span-55 {
-   grid-row: span 55 / span 55;
-}
-
-.row-span-9 {
-   grid-row: span 9 / span 9;
-}
-
-.row-span-7 {
-   grid-row: span 7 / span 7;
-}
-
-.row-span-54 {
-   grid-row: span 54 / span 54;
-}
-
 .max-h-maximum {
    max-height: 92vh;
 }

@@ -16,6 +16,8 @@
     "lodash": "^4.17.21",
     "pocketbase": "^0.21.1",
     "simple-icons": "^11.7.0",
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5",
     "tailwindcss-elevation": "^2.0.0",
     "uuid": "^9.0.1",
     "vue": "^3.4.15",
