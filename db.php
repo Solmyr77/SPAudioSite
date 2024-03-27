@@ -38,15 +38,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $title = $splitMessage[0];
         $link = $splitMessage[1];
-        $uuid = $splitMessage[2];
-        $votes = $splitMessage[3];
-        $addedOn = $splitMessage[4];
-        $playedAlready = $splitMessage[5];
-        $canPlay = $splitMessage[6];
+        $votes = $splitMessage[2];
+        $addedOn = $splitMessage[3];
+        $playedAlready = $splitMessage[4];
+        $canPlay = $splitMessage[5];
+        $userId = $splitMessage[6];
 
-        $sql = "INSERT INTO `music`(`ID`, `Title`, `Link`, `Uuid`, `Votes`, `AddedOn`, `PlayedAlready`, `CanPlay`) VALUES (uuid(), '$title', '$link', '$uuid', '$votes', '$addedOn', '$playedAlready', '$canPlay')";
+        $sql = "INSERT INTO `music`(`ID`, `Title`, `Link`, `Votes`, `AddedOn`, `PlayedAlready`, `CanPlay`) VALUES (uuid(), '$title', '$link', '$votes', '$addedOn', '$playedAlready', '$canPlay');";
+        $sql .= "INSERT INTO `music_votes`(`id`, `music_id`, `user_id`) VALUES (uuid(), (SELECT `ID` FROM `music`), '$userId');";
 
-        if ($conn->query($sql) === TRUE) {
+        echo $sql;
+
+        if (mysqli_multi_query($conn, $sql) === TRUE) {
             echo "New record created successfully";
         } else {
             echo "Error: " . $conn->error;
@@ -57,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $message = explode("|||", $message);
 
-        $sql = "UPDATE `music` SET `Uuid`= CONCAT(`Uuid`, '|||$message[1]'), `Votes`= `Votes` + 1 WHERE `ID` = '$message[0]';";
+        $sql = "UPDATE `music` SET `Votes`= `Votes` + 1 WHERE `ID` = '$message[0]';";
 
         if ($conn->query($sql) === TRUE) {
             echo "Record updated successfully";
@@ -68,8 +71,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    $sql = "SELECT * FROM music";
-
+    $sql = "SELECT music.*, music_votes.user_id 
+            FROM music 
+            LEFT JOIN music_votes ON music.ID = music_votes.music_id";
+    
     $result = $conn->query($sql);
 
     if ($result) {

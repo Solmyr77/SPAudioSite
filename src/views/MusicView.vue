@@ -7,16 +7,21 @@ import { HandThumbUpIcon, ArrowRightCircleIcon, XMarkIcon, CheckIcon } from "@he
 import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
 
+class VoterIDs {
+   
+}
+
 class Record {
-   constructor(addedOn, canPlay, id, url, playedAlready, title, uuid, votes) {
+   constructor(addedOn, canPlay, id, url, playedAlready, title, votes, display) {
       this.addedOn = addedOn;
       this.canPlay = canPlay;
       this.id = id;
       this.url = url;
       this.playedAlready = playedAlready;
       this.title = title;
-      this.uuid = uuid;
       this.votes = votes;
+      this.display = display;
+      this.voterIDs = new VoterIDs();
    }
 }
 
@@ -74,39 +79,41 @@ export default {
          // TODO: Clean up and validate input
          let inputText = this.$refs.songInput.value;
 
-         await this.sendPostRequest(`add:${inputText}|||null|||${this.uuid}|||0|||${mysqlDateTime}|||0|||1`);
+
+         await this.sendPostRequest(`add:${inputText}|||null|||0|||${mysqlDateTime}|||0|||1|||${this.uuid}`);
 
          this.$refs.songInput.value = "";
 
          await this.getSongs();
       },
       async getSongs() {
-         let response;
+         try {
+            const response = await axios.get("https://spdisco.hu/db.php");
 
-         await axios.get("https://spdisco.hu/db.php")
-            .then(res => {
-               response = res.data;
-            })
-            .catch(error => {
-               console.error('Error:', error);
-            })
+            console.log(response)
 
-         response.forEach(record => {
-            this.records.push(new Record(record.AddedOn, record.CanPlay, record.ID, record.Link, record.PlayedAlready, record.Title, record.Uuid, record.Votes))
-         });
+            const records = response.data.map(record => {
 
-         this.records = response.map(record => new Record(
-            record.AddedOn,
-            record.CanPlay,
-            record.ID,
-            record.Link,
-            record.PlayedAlready,
-            record.Title,
-            record.Uuid,
-            record.Votes
-         ));
+               let display = "normal";
+               if (record.CanPlay == 0) {
+                  display = "cantPlay";
+               } else if (record.PlayedAlready == 1) {
+                  display = "playedAlready";
+               }
+               return new Record(record.AddedOn, record.CanPlay, record.ID, record.Link, record.PlayedAlready, record.Title, record.Votes, display);
+            });
 
-         this.records.sort((a, b) => new Date(b.addedOn) - new Date(a.addedOn));
+            records.sort((a, b) => new Date(b.addedOn) - new Date(a.addedOn));
+
+            const otherSongs = records.filter(x => x.canPlay == 1 && x.playedAlready == 0);
+            const alreadyPlayedSongs = records.filter(x => x.playedAlready == 1);
+            const cantPlaySongs = records.filter(x => x.canPlay == 0);
+
+            this.records = otherSongs.concat(alreadyPlayedSongs, cantPlaySongs);
+         } catch (error) {
+            console.error('Error:', error);
+         }
+
       },
       handleKeyDown(event) {
          if (event.keyCode === 13) {
@@ -142,63 +149,82 @@ export default {
       <div ref="songsList" class="flex flex-col max-w-7xl w-full items-center pb-4 overflow-auto pt-2">
 
          <!--Music card-->
-         <div v-for="record in records" class="flex justify-center h-28 items-center w-11/12 mb-4 relative">
+         <div v-for="record in records" class="flex justify-center items-center w-11/12 mb-4 relative">
 
-            <div v-if="!record.uuid.includes(uuid) && record.canPlay == 1 && record.playedAlready == 0" @click="handleUpvote(record.id)" class="absolute -top-0 right-0 bg-ui-primary size-6 rounded-tr-lg rounded-bl-lg ring-ui-ring ring-2 flex justify-center items-center">
+            <!--Badge-->
+            <div v-if="record.display == 'normal'" @click="handleUpvote(record.id)"
+               class="absolute -top-0 right-0 bg-ui-primary size-6 rounded-tr-lg rounded-bl-lg ring-ui-ring ring-2 flex justify-center items-center">
                <p class="dm-sans-bold text-ui-background">{{ record.votes }}</p>
             </div>
+            <!--Badge-->
 
-            <div
-               v-if="record.playedAlready == 1"
-               class="flex flex-col justify-between items-start w-full h-full basis-4/5 ring-ui-ring bg-ui-card rounded-tl-md rounded-bl-md ring-2 pl-3 py-3">
-               <div class="flex justify-center items-center">
-                  <h3 class="text-ui-primary dm-sans-medium text-lg mr-2">{{ record.title }}</h3>
+            <!--Normal-->
+            <template v-if="record.display == 'normal'">
+               <div :ref="record.id"
+                  class="flex flex-col justify-between items-start w-full h-full basis-4/5 ring-ui-ring bg-ui-card rounded-tl-md rounded-bl-md ring-2 pl-3 py-3">
+                  <div class="flex justify-center items-center">
+                     <h3 class="text-gray-300 dm-sans-medium text-lg mr-2">{{ record.title }}</h3>
+                  </div>
+
+                  <h3 class="italic text-gray-400 dm-sans-regular mt-2">
+                     Érkezett: {{ record.addedOn.split(" ")[1].substring(0, 5) }}
+                  </h3>
                </div>
 
-               <h3 class="italic text-ui-primary dm-sans-regular mt-2">
-                  Lejátszva
-               </h3>
-            </div>
+               <div @click="handleUpvote(record.id)"
+                  class="flex justify-center items-center w-full basis-1/5 bg-ui-stone ring-ui-ring rounded-tr-md rounded-br-md ring-2 cursor-pointer active:bg-stone-950">
+                  <HandThumbUpIcon class="fill-white size-10 absolute bottom-4" />
+               </div>
+            </template>
+            <!--Normal-->
 
-            <div
-               v-else-if="record.canPlay == 1"
-               class="flex flex-col justify-between items-start w-full h-full basis-4/5 ring-ui-ring bg-ui-card rounded-tl-md rounded-bl-md ring-2 pl-3 py-3">
-               <div class="flex justify-center items-center">
-                  <h3 class="text-gray-300 dm-sans-medium text-lg mr-2">{{ record.title }}</h3>
+            <!--Played already-->
+            <template v-if="record.display == 'playedAlready'">
+               <div
+                  class="flex flex-col justify-between items-start w-full h-full basis-4/5 ring-ui-ring bg-ui-card rounded-tl-md rounded-bl-md ring-2 pl-3 py-3">
+                  <div class="flex justify-center items-center">
+                     <h3 class="text-ui-primary dm-sans-medium text-lg mr-2">{{ record.title }}</h3>
+                  </div>
+
+                  <h3 class="italic text-ui-primary dm-sans-regular mt-2">
+                     Lejátszva
+                  </h3>
                </div>
 
-               <h3 class="italic text-gray-400 dm-sans-regular mt-2">
-                  Érkezett: {{ record.addedOn.split(" ")[1].substring(0, 5) }}
-               </h3>
-            </div>
-
-            <div
-               v-else-if="record.canPlay == 0"
-               class="flex flex-col justify-center items-start w-full h-full basis-4/5 ring-ui-ring bg-ui-card rounded-tl-md rounded-bl-md ring-2 pl-3 py-3">
-               <div class="flex justify-center items-center">
-                  <h3 class="text-gray-300 dm-sans-medium text-lg mr-2 line-through decoration-gray-300 decoration-4">{{ record.title }}</h3>
+               <div @click="handleUpvote(record.id)"
+                  class="flex justify-center items-center w-full h-full basis-1/5 bg-ui-stone ring-ui-ring rounded-tr-md rounded-br-md ring-2 cursor-pointer active:bg-stone-950">
+                  <CheckIcon class="fill-ui-primary size-10" />
                </div>
-            </div>
+            </template>
+            <!--Played already-->
 
-            <div v-if="record.canPlay == 0" @click="handleUpvote(record.id)"
-               class="flex justify-center items-center w-full h-full basis-1/5 bg-ui-stone ring-ui-ring rounded-tr-md rounded-br-md ring-2 cursor-pointer active:bg-stone-950">
-               <XMarkIcon class="fill-white stroke-2 size-10" />
-            </div>
+            <!--Can't play-->
+            <template v-if="record.display == 'cantPlay'">
+               <div
+                  class="flex flex-col justify-center items-start w-full h-full basis-4/5 ring-ui-ring bg-ui-card rounded-tl-md rounded-bl-md ring-2 pl-3 py-3">
+                  <div class="flex justify-center items-center">
+                     <h3
+                        class="text-gray-300 dm-sans-medium text-lg mr-2 line-through decoration-gray-300 decoration-4">
+                        {{
+            record.title }}</h3>
+                  </div>
+               </div>
 
-            <div v-if="record.playedAlready == 1" @click="handleUpvote(record.id)"
-               class="flex justify-center items-center w-full h-full basis-1/5 bg-ui-stone ring-ui-ring rounded-tr-md rounded-br-md ring-2 cursor-pointer active:bg-stone-950">
-               <CheckIcon class="fill-ui-primary size-10" />
-            </div>
+               <div @click="handleUpvote(record.id)"
+                  class="flex justify-center items-center w-full h-full basis-1/5 bg-ui-stone ring-ui-ring rounded-tr-md rounded-br-md ring-2 cursor-pointer active:bg-stone-950">
+                  <XMarkIcon class="fill-white stroke-2 size-10" />
+               </div>
+            </template>
+            <!--Can't play-->
 
-            <div v-if="!record.uuid.includes(uuid) && record.canPlay == 1 && record.playedAlready == 0" @click="handleUpvote(record.id)"
-               class="flex justify-center items-center w-full h-full basis-1/5 bg-ui-stone ring-ui-ring rounded-tr-md rounded-br-md ring-2 cursor-pointer active:bg-stone-950">
-               <HandThumbUpIcon class="fill-white size-10 absolute bottom-4" />
-            </div>
+            <!--Right marker
 
-            <div v-else-if="record.uuid.includes(uuid) && record.canPlay == 1 && record.playedAlready == 0"
+            <div v-if="record.uuid.includes(uuid) && record.canPlay == 1 && record.playedAlready == 0"
                class="flex justify-center items-center w-full h-full basis-1/5 bg-ui-stone ring-ui-ring rounded-tr-md rounded-br-md ring-2">
                <h3 class="text-ui-primary text-3xl dm-sans-medium">{{ record.votes }}</h3>
             </div>
+
+            Right marker-->
 
          </div>
          <!--Music card-->
